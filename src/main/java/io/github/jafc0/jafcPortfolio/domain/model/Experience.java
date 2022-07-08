@@ -47,6 +47,6 @@ public class Experience {
     private TypeEnum type;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 }

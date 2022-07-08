@@ -1,9 +1,11 @@
 package io.github.jafc0.jafcPortfolio.domain.model;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +54,16 @@ public class User {
     @Column
     private String field;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<Experience> experiences;
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Experience> experiences = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Skill> skills = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user_id",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Review> publications = new ArrayList<>();
     
 }
