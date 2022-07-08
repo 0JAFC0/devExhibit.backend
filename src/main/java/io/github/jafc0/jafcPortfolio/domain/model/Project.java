@@ -1,15 +1,14 @@
 package io.github.jafc0.jafcPortfolio.domain.model;
 
 import java.util.Base64;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,35 +23,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "users")
-public class User {
-
+@Table(name = "project")
+public class Project {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
-    private String password;
+    private String description;
 
     @Column
-    private Date year;
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum category;
 
-    @Column
-    private String work;
-
-    @Column(name = "live_in")
-    private String liveIn;
-
-    @Column
     private Base64 image;
 
-    @Column
-    private String field;
+    @Column(name = "url_project_github")
+    private String urlProjectGithub;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<Experience> experiences;
-    
 }

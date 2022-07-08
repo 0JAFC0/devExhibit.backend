@@ -7,6 +7,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -43,4 +45,8 @@ public class Experience {
     @Column
     @Enumerated(EnumType.STRING)
     private TypeEnum type;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
 }
