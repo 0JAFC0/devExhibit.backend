@@ -2,10 +2,7 @@ package io.github.jafc0.jafcPortfolio.domain.model;
 
 import java.util.Base64;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,24 +20,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "project")
-public class Project {
+@Table(name = "review")
+public class Review {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String description;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private CategoryEnum category;
+    private String content;
 
     private Base64 image;
-
-    @Column(name = "url_project_github")
-    private String urlProjectGithub;
-
 }
