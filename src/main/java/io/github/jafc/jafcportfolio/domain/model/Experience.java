@@ -1,4 +1,4 @@
-package io.github.jafc0.jafcPortfolio.domain.model;
+package io.github.jafc.jafcportfolio.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,22 +23,29 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "skill")
-public class Skill {
+@Table(name = "experience")
+public class Experience {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String name;
+    @Column(name = "name_company")
+    private String nameCompany;
 
     @Column
-    private Integer percentagem;
+    private String post;
 
+    @Column
+    private String description;
+
+    @Column
+    private String duration;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private TypeEnum type;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -1,6 +1,4 @@
-package io.github.jafc0.jafcPortfolio.domain.model;
-
-import java.util.Base64;
+package io.github.jafc.jafcportfolio.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +35,7 @@ public class Review {
     private String content;
 
     @Column
-    private Base64 image;
+    private String imageBase64;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

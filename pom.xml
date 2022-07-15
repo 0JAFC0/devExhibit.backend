@@ -12,9 +12,9 @@
 	<artifactId>jafcPortfolio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jafcPortfolio</name>
-	<description>Demo project for Spring Boot</description>
+	<description>API para guardar informações do site 0jafc0.github.io</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

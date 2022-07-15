@@ -1,4 +1,4 @@
-package io.github.jafc0.jafcPortfolio;
+package io.github.jafc.jafcportfolio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
