@@ -37,7 +37,7 @@ public class Skill {
     private Integer percentagem;
 
     @Enumerated(EnumType.STRING)
-    private TypeEnum type;
+    private TypeSkillEnum type;
     
     @ManyToOne
     @JoinColumn(name = "user_id")

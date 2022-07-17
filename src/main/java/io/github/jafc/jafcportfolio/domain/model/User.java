@@ -18,8 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -27,29 +26,45 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private Date year;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String work;
 
-    @Column(name = "live_in")
+    @Getter
+    @Setter
+    @Column(name = "live_in",nullable = false)
     private String liveIn;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String imageBase64;
 
-    @Column
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private String field;
 
     @OneToMany(mappedBy = "user",orphanRemoval = true)
@@ -78,14 +93,14 @@ public class User {
         return false;
     }
 
-    public boolean addSkills(Skill skill){
+    public boolean addSkill(Skill skill){
         if(!(skills.stream().allMatch(skillM -> (skillM.equals(skill))))) {
             return this.skills.add(skill);
          }
         return false;
     }
 
-    public boolean removeExperience(Skill skill) {
+    public boolean removeSkill(Skill skill) {
         if(!(skills.stream().allMatch(skillM -> (skillM.equals(skill))))) {
             return this.skills.remove(skill);
          }

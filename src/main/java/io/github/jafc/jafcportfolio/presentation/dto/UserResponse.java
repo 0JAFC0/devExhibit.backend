@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.presentation.dto;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class UserResponse {
 
     private String liveIn;
 
-    private Base64 image;
+    private String imageBase64;
 
     private String field;
 
