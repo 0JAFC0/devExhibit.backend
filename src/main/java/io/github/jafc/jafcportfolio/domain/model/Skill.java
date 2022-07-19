@@ -30,7 +30,7 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column

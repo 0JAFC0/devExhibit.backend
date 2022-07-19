@@ -1,7 +1,5 @@
 package io.github.jafc.jafcportfolio.presentation.dto;
 
-import java.util.Base64;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class ReviewResponse {
 
     private String content;
 
-    private Base64 image;
+    private String imageBase64;
 
     private UserResponse user;
 

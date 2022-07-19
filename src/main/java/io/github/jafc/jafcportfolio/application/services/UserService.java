@@ -19,6 +19,11 @@ public class UserService {
     @Autowired
     private SkillService skillService;
 
+    @Autowired
+    public ProjectService projectService;
+
+    private String mensageException = "The user with id ";
+
     public User save(User user) {
         return userRepository.save(user);
     }
@@ -36,13 +41,21 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("The user with id ".concat(id.toString()).concat(" not exist.")));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not exist.")));
     }
 
     public User addSkillInUser(Long id, Skill skill){
-        User user = userRepository.save(userRepository.findById(id).orElseThrow(() -> new NotFoundException("The user with id ".concat(id.toString()).concat(" not found."))));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not found.")));
         skill.setUser(user);
         user.addSkill(skillService.save(skill));
         return userRepository.save(user);
+    }
+
+    public User removeSkillInUser(Long id, Skill skill){
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not found.")));
+        user.removeSkill(skill);
+        user = userRepository.save(user);
+        skillService.delete(skill.getId());
+        return user;
     }
 }

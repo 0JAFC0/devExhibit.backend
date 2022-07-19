@@ -1,7 +1,5 @@
 package io.github.jafc.jafcportfolio.presentation.dto;
 
-import java.util.Base64;
-
 import io.github.jafc.jafcportfolio.domain.model.CategoryEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +20,7 @@ public class ProjectResponse {
 
     private CategoryEnum category;
 
-    private Base64 image;
+    private String imageBase64;
 
     private String urlProjectGithub;
 

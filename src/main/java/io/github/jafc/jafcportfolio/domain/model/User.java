@@ -79,59 +79,18 @@ public class User {
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<Review> publications = new ArrayList<>();
 
-    public boolean addExperience(Experience experience){
-        if(!(experiences.stream().allMatch(experienceM -> (experienceM.equals(experience))))) {
-            return this.experiences.add(experience);
-         }
-        return false;
-    }
-
-    public boolean removeExperience(Experience experience) {
-        if(!(experiences.stream().allMatch(experienceM -> (experienceM.equals(experience))))) {
-            return this.experiences.remove(experience);
+    public boolean addSkill(Skill skill){
+        if(!skills.contains(skill)) {
+            return this.skills.add(skill);
         }
         return false;
     }
 
-    public boolean addSkill(Skill skill){
-        if(!(skills.stream().allMatch(skillM -> (skillM.equals(skill))))) {
-            return this.skills.add(skill);
-         }
-        return false;
-    }
-
     public boolean removeSkill(Skill skill) {
-        if(!(skills.stream().allMatch(skillM -> (skillM.equals(skill))))) {
+        if(!skills.contains(skill)) {
             return this.skills.remove(skill);
-         }
+        }
         return false;
     }
 
-    public boolean addProject(Project project){
-        if(!(projects.stream().allMatch(projectM -> (projectM.equals(project))))) {
-            return this.projects.add(project);
-         }
-        return false;
-    }
-
-    public boolean removeProject(Project project){
-        if(!(projects.stream().allMatch(projectM -> (projectM.equals(project))))) {
-            return this.projects.remove(project);
-         }
-        return false;
-    }
-
-    public boolean addPublication(Review review){
-        if(!(publications.stream().allMatch(publicationM -> (publicationM.equals(review))))) {
-            return this.publications.add(review);
-         }
-        return false;
-    }
-
-    public boolean removePublication(Review review){
-        if(!(publications.stream().allMatch(publicationM -> (publicationM.equals(review))))) {
-            return this.publications.remove(review);
-         }
-        return false;
-    }
 }
