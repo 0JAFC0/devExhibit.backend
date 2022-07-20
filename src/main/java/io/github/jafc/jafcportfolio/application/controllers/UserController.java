@@ -1,21 +1,21 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.UserService;
-import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.SkillResponse;
 import io.github.jafc.jafcportfolio.presentation.dto.UserResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
@@ -40,23 +40,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Response<UserResponse>> getAll() {
-        return responseService.create(modelMapperService.convert(userService.findAll(), UserResponse.class));
+    public ResponseEntity<Response<List<User>>> getAll() {
+        
+        return responseService.create(userService.findAll());
     }
 
-    @PostMapping("/add-skill")
-    public ResponseEntity<Response<UserResponse>> addSkillInUser(@RequestBody SkillResponse skillResponse) {
-        UserResponse user = modelMapperService.convert(userService.addSkillInUser(skillResponse.getUser().getId(), 
-            modelMapperService.convert(skillResponse, Skill.class)), UserResponse.class);
-
-        return responseService.create(user);
-    }
-
-    @DeleteMapping("/remove-skill")
-    public ResponseEntity<Response<UserResponse>> removeSkillInUser(@RequestBody SkillResponse skillResponse) {
-        UserResponse user = modelMapperService.convert(userService.removeSkillInUser(skillResponse.getUser().getId(), 
-            modelMapperService.convert(skillResponse, Skill.class)), UserResponse.class);
-
-        return responseService.ok(user);
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<User>> getById(@PathVariable Long id) {
+        return responseService.create(userService.findById(id));
     }
 }

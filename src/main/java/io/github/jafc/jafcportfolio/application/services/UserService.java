@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.NotFoundException;
 import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.UserRepository;
@@ -15,9 +14,6 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private SkillService skillService;
 
     @Autowired
     public ProjectService projectService;
@@ -42,20 +38,5 @@ public class UserService {
 
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not exist.")));
-    }
-
-    public User addSkillInUser(Long id, Skill skill){
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not found.")));
-        skill.setUser(user);
-        user.addSkill(skillService.save(skill));
-        return userRepository.save(user);
-    }
-
-    public User removeSkillInUser(Long id, Skill skill){
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(mensageException.concat(id.toString()).concat(" not found.")));
-        user.removeSkill(skill);
-        user = userRepository.save(user);
-        skillService.delete(skill.getId());
-        return user;
     }
 }
