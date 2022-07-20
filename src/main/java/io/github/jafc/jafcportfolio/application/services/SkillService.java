@@ -1,6 +1,7 @@
 package io.github.jafc.jafcportfolio.application.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,14 @@ public class SkillService {
     public Skill saveSkillUser(Long id, Skill skill) {
         User user = userService.findById(id);
         skill.setUser(user);
+        return skillRepository.save(skill);
+    }
+
+    public Skill updateSkill(Skill skill) {
+        Optional<Skill> temp = skillRepository.findById(skill.getId());
+        if(!temp.isPresent()) {
+            throw new NotFoundException("Not found skill with id".concat(skill.getId().toString()));
+        }
         return skillRepository.save(skill);
     }
 
