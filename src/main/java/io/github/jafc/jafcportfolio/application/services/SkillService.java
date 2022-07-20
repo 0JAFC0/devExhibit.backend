@@ -20,8 +20,8 @@ public class SkillService {
     @Autowired
     private UserService userService;
 
-    public Skill saveSkillUser(Long id, Skill skill) {
-        User user = userService.findById(id);
+    public Skill saveSkillUser(Skill skill) {
+        User user = userService.findById(skill.getUser().getId());
         skill.setUser(user);
         return skillRepository.save(skill);
     }
@@ -34,13 +34,12 @@ public class SkillService {
         return skillRepository.save(skill);
     }
 
-    public void removeSkillUser(Long id, Skill skill) {
-        User user = userService.findById(id);
-        if(skill.getUser().getId().equals(user.getId())) {
-            skillRepository.deleteById(skill.getId());
-        }else {
-            throw new NotFoundException("Not found skill in user with id " + id);
+    public void removeSkillUser(Skill skill) {
+        User user = userService.findById(skill.getUser().getId());
+        if(!(skill.getUser().getId().equals(user.getId()))) {
+            throw new NotFoundException("Not found skill in user with id " + skill.getUser().getId());
         }
+        skillRepository.deleteById(skill.getId());
     }
 
     public List<Skill> getAll() {

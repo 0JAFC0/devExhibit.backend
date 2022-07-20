@@ -35,13 +35,12 @@ public class SkillController {
     
     @PostMapping("/save")
     public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillResponse skill) {
-        return responseService.create(modelMapperService.convert(skillService.saveSkillUser(skill.getUser().getId(), 
-            modelMapperService.convert(skill, Skill.class)), SkillResponse.class));
+        return responseService.create(modelMapperService.convert(modelMapperService.convert(skill, Skill.class),SkillResponse.class));
     }
 
     @DeleteMapping
     public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillResponse skill) {
-        skillService.removeSkillUser(skill.getUser().getId(), modelMapperService.convert(skill, Skill.class));
+        skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class));
         return responseService.create("delete Successful");
     }
 
