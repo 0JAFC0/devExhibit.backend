@@ -15,9 +15,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    public ProjectService projectService;
-
     private String mensageException = "The user with id ";
 
     public User save(User user) {
