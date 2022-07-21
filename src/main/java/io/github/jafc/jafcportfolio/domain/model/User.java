@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
+@DynamicUpdate
 @Table(name = "users")
 public class User {
 
