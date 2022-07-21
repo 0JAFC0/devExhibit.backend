@@ -1,7 +1,5 @@
 package io.github.jafc.jafcportfolio.presentation.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class UserResponse {
 
     private String password;
 
-    private Date year;
+    private Integer age;
 
     private String work;
 

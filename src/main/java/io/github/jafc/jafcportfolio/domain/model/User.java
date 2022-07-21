@@ -1,7 +1,5 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
@@ -45,7 +44,7 @@ public class User {
     @Getter
     @Setter
     @Column(nullable = false)
-    private Date year;
+    private Integer age;
 
     @Getter
     @Setter
@@ -59,7 +58,7 @@ public class User {
 
     @Getter
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false,length = 85000)
     private String imageBase64;
 
     @Getter
