@@ -29,7 +29,7 @@ public class ProjectService {
     public Project updateProjectUser(Project project) {
         Optional<Project> temp = projectRepository.findById(project.getId());
         if(!(temp.isPresent())) {
-            throw new NotFoundException("Not found skill with id".concat(project.getId().toString()));
+            throw new NotFoundException("Not found project with id".concat(project.getId().toString()));
         }
         return projectRepository.save(project);
     }
