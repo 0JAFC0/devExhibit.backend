@@ -1,6 +1,5 @@
 package io.github.jafc.jafcportfolio.presentation.dto;
 
-import io.github.jafc.jafcportfolio.domain.model.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,19 +9,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExperienceResponse {
+public class ProfessionalExperienceResponse {
 
     private Long id;
 
-    private String nameCompany;
+    private String name;
 
     private String post;
 
     private String description;
 
     private String duration;
-
-    private TypeEnum type;
 
     private UserResponse user;
 }

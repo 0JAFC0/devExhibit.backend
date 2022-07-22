@@ -35,7 +35,7 @@ public class SkillController {
     
     @PostMapping("/save")
     public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillResponse skill) {
-        return responseService.create(modelMapperService.convert(modelMapperService.convert(skill, Skill.class),SkillResponse.class));
+        return responseService.create(modelMapperService.convert(skillService.saveSkillUser(modelMapperService.convert(skill, Skill.class)),SkillResponse.class));
     }
 
     @DeleteMapping

@@ -16,7 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -25,44 +26,28 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String name;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String password;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private Integer age;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String work;
 
-    @Getter
-    @Setter
     @Column(name = "live_in",nullable = false)
     private String liveIn;
 
-    @Getter
-    @Setter
     @Column(nullable = false,length = 85000)
     private String imageBase64;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String field;
     

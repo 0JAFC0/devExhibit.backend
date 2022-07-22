@@ -1,6 +1,5 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,19 +26,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @DynamicUpdate
+@Entity
 @Table(name = "skill")
 public class Skill {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
     private Integer percentagem;
 
     @Enumerated(EnumType.STRING)
