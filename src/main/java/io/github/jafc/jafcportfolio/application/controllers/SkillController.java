@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,14 @@ public class SkillController {
     @GetMapping
     public ResponseEntity<Response<List<SkillResponse>>> getAll() {
         List<SkillResponse> dtos = skillService.getAll().stream()
+            .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
+    }
+
+    @GetMapping("/getSkillByUserID/{userId}")
+    public ResponseEntity<Response<List<SkillResponse>>> getSkillByUserID(@PathVariable("userId") Long userId) {
+        List<SkillResponse> dtos = skillService.getSkillsByUserID(userId).stream()
             .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
             .collect(Collectors.toList());
         return responseService.ok(dtos);
