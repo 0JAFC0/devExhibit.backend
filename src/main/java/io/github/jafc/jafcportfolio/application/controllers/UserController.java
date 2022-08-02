@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +18,11 @@ import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseSe
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.UserResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
+import io.swagger.annotations.Api;
 
+@Api(value = "End Point do usuario")
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin
 public class UserController {
     
     @Autowired
