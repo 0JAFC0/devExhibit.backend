@@ -42,6 +42,14 @@ public class ProjectService {
         projectRepository.deleteById(project.getId());
     }
 
+    public List<Project> getProjectByUserID(Long userId) {
+        List<Project> projects = projectRepository.findProjectByUserID(userId);
+        if(projects.isEmpty()) {
+            throw new NotFoundException("Not found projects in user with id ".concat(userId.toString()));
+        }
+        return projects;
+    }
+
     public void deleteById(Long id) {
         projectRepository.deleteById(id);
     }

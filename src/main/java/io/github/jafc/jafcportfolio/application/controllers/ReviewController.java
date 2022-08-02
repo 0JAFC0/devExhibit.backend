@@ -58,7 +58,7 @@ public class ReviewController {
     }
 
     @GetMapping("/getReviewByUserID/{userId}")
-    public ResponseEntity<Response<List<ReviewResponse>>> getSkillByUserID(@PathVariable("userId") Long userId) {
+    public ResponseEntity<Response<List<ReviewResponse>>> getReviewByUserID(@PathVariable("userId") Long userId) {
         List<ReviewResponse> dtos = reviewServices.getReviewsByUserID(userId).stream()
             .map(review -> modelMapperService.convert(review, ReviewResponse.class))
             .collect(Collectors.toList());

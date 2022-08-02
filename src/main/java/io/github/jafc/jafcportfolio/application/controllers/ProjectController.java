@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,14 @@ public class ProjectController {
     public ResponseEntity<Response<String>> deleteProject(@RequestBody ProjectResponse project) {
         projectService.removeProjectUser(modelMapperService.convert(project, Project.class));
         return responseService.ok("Delete Successful.");
+    }
+
+    @GetMapping("/getProjectByUserID/{userId}")
+    public ResponseEntity<Response<List<ProjectResponse>>> getProjectByUserID(@PathVariable("userId") Long userId) {
+        List<ProjectResponse> dtos = projectService.getProjectByUserID(userId).stream()
+            .map(review -> modelMapperService.convert(review, ProjectResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
     }
 
     @GetMapping
