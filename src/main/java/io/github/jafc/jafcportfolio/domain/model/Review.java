@@ -1,6 +1,5 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,22 +24,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
 @DynamicUpdate
+@Entity
 @Table(name = "review")
 public class Review {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String title;
 
-    @Column
     private String content;
 
-    @Column
     private String imageBase64;
 
     @ManyToOne(fetch = FetchType.LAZY)
