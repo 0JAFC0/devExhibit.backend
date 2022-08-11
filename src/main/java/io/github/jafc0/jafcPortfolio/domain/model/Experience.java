@@ -1,17 +1,15 @@
-package io.github.jafc.jafcportfolio.domain.model;
+package io.github.jafc0.jafcPortfolio.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,23 +22,31 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@DynamicUpdate
 @Entity
-@Table(name = "review")
-public class Review {
-    
+@Table(name = "experience")
+public class Experience {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(name = "name_company")
+    private String nameCompany;
 
-    private String content;
+    @Column
+    private String post;
 
-    private String imageBase64;
+    @Column
+    private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column
+    private String duration;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TypeEnum type;
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 }
