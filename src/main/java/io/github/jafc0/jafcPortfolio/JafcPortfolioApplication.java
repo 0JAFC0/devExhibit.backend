@@ -1,13 +1,9 @@
-package io.github.jafc.jafcportfolio;
+package io.github.jafc0.jafcPortfolio;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan
 public class JafcPortfolioApplication {
 
 	public static void main(String[] args) {
