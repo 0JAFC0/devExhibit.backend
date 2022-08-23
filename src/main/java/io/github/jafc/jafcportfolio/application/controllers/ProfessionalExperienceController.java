@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/professional")
+@CrossOrigin
 public class ProfessionalExperienceController {
     
     @Autowired
@@ -40,13 +42,13 @@ public class ProfessionalExperienceController {
 
     @PutMapping
     public ResponseEntity<Response<ProfessionalExperienceResponse>> updateExperienceUser(@RequestBody ProfessionalExperienceResponse experience) {
-        return responseService.create(modelMapperService.convert(experienceService.updateProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
+        return responseService.ok(modelMapperService.convert(experienceService.updateProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
     }
 
     @DeleteMapping
     public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody ProfessionalExperienceResponse experience) {
         experienceService.deleteProfessional(modelMapperService.convert(experience, ProfessionalExperience.class));
-        return responseService.create("delete Successful");
+        return responseService.ok("delete Successful");
     }
 
     @GetMapping

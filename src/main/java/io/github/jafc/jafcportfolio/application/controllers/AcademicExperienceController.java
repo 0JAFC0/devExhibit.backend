@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/academic")
+@CrossOrigin
 public class AcademicExperienceController {
     
     @Autowired
@@ -40,13 +42,13 @@ public class AcademicExperienceController {
 
     @PutMapping
     public ResponseEntity<Response<AcademicExperienceResponse>> updateExperienceUser(@RequestBody AcademicExperienceResponse experience) {
-        return responseService.create(modelMapperService.convert(academicExperienceService.updateAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
+        return responseService.ok(modelMapperService.convert(academicExperienceService.updateAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
     }
 
     @DeleteMapping
     public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody AcademicExperienceResponse experience) {
         academicExperienceService.deleteAcademic(modelMapperService.convert(experience, AcademicExperience.class));
-        return responseService.create("delete Successful");
+        return responseService.ok("delete Successful");
     }
 
     @GetMapping
