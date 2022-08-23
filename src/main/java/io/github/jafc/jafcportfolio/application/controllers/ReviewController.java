@@ -46,7 +46,7 @@ public class ReviewController {
     @DeleteMapping
     public ResponseEntity<Response<String>> deleteSkill(@RequestBody ReviewResponse review) {
         reviewServices.removeReviewUser(modelMapperService.convert(review, Review.class));
-        return responseService.create("delete Successful");
+        return responseService.ok("delete Successful");
     }
 
     @GetMapping

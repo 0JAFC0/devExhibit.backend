@@ -22,4 +22,16 @@ public class ResponseService {
     public <T> ResponseEntity<Response<T>> ok(T data) {
         return ResponseEntity.status(HttpStatus.OK).body(new Response<T>(data));
     }
+    
+    public <T> ResponseEntity<Response<T>> forbidden(T data) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Response<T>(data));
+    }
+    
+    public <T> ResponseEntity<Response<T>> notFound(T data) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<T>(data));
+    }
+    
+    public <T> ResponseEntity<Response<T>> unauthorized(T data) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<T>(data));
+    }
 }

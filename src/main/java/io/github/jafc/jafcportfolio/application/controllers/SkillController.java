@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/skill")
+@CrossOrigin
 public class SkillController {
 
     @Autowired
@@ -42,7 +44,7 @@ public class SkillController {
     @DeleteMapping
     public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillResponse skill) {
         skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class));
-        return responseService.create("delete Successful");
+        return responseService.ok("delete Successful");
     }
 
     @GetMapping
