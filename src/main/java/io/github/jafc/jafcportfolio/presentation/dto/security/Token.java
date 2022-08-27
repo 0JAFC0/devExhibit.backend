@@ -2,21 +2,16 @@ package io.github.jafc.jafcportfolio.presentation.dto.security;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
+@Data
+@Builder
 public class Token implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	private String email;
-	private String bodyToken;
+	private String type;
+	private String token;
 }
