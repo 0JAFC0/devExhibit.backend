@@ -2,7 +2,6 @@ package io.github.jafc.jafcportfolio.presentation.dto;
 
 import java.util.List;
 
-import io.github.jafc.jafcportfolio.domain.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +27,5 @@ public class UserResponse {
 
     private String field;
     
-    private List<Role> roles;
+    private List<RoleResponse> roles;
 }

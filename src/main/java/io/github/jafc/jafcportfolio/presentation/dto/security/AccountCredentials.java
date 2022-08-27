@@ -2,15 +2,9 @@ package io.github.jafc.jafcportfolio.presentation.dto.security;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@EqualsAndHashCode
+@Data
 public class AccountCredentials implements Serializable{
 
 	private static final long serialVersionUID = 1L;
