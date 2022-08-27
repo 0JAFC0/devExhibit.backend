@@ -19,6 +19,6 @@ public class ReviewResponse {
 
     private String imageBase64;
 
-    private UserResponse user;
+    private UserRequest user;
 
 }
