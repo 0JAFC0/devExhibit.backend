@@ -20,5 +20,5 @@ public class SkillResponse {
 
     private TypeSkillEnum type;
     
-    private UserResponse user;
+    private UserRequest user;
 }
