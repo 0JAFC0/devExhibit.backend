@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ReviewServices;
 import io.github.jafc.jafcportfolio.domain.model.Review;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.ReviewResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.ReviewResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 import io.swagger.annotations.Api;
 

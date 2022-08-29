@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ProjectService;
 import io.github.jafc.jafcportfolio.domain.model.Project;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.ProjectResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.ProjectResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
