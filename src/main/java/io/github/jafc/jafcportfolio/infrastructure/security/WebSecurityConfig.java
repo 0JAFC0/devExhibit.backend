@@ -50,7 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.authorizeRequests()
-    	.antMatchers("/api/user/signin","/api/user/signup","/swagger-ui.html","/v2/api-docs").permitAll()
+    	.antMatchers("/api/user/signin","/api/user/signup").permitAll()
+    	.antMatchers(SWAGGER_WHITE_LIST).permitAll()
     	.antMatchers(HttpMethod.GET, "/api/user/**","/api/professional/**","/api/academic/**","/api/project/**","/api/review/**","/api/skill/**").permitAll()
     	.anyRequest().authenticated()
     	.and()
@@ -62,4 +63,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	//Configuração do Filtro
     	http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+    
+    // Constant method with whiteList permissions
+    private static final String[] SWAGGER_WHITE_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
 }
