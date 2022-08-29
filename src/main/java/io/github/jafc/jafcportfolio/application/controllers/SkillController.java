@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.SkillService;
 import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.SkillResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.SkillResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController

@@ -34,4 +34,8 @@ public class ResponseService {
     public <T> ResponseEntity<Response<T>> unauthorized(T data) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response<T>(data));
     }
+    
+    public <T> ResponseEntity<Response<T>> badRequest(T data) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<T>(data));
+    }
 }

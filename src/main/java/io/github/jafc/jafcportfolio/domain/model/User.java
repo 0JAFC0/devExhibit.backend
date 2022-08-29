@@ -1,8 +1,8 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,9 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -38,10 +35,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String fullname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 120)
     private String password;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
     @Column(nullable = false)
@@ -59,40 +56,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String field;
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_role",
     joinColumns = {@JoinColumn(name="id_user")},
     inverseJoinColumns = {@JoinColumn(name="id_role")})
-    private List<Role> roles = new ArrayList<>();
-    
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-
-	@Override
-	public String getUsername() {
-		return this.email;
-	}
+    private Set<Role> roles = new HashSet<>();
     
 }

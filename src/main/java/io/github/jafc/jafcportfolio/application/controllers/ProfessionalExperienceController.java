@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ProfessionalExperienceS
 import io.github.jafc.jafcportfolio.domain.model.ProfessionalExperience;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.ProfessionalExperienceResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.ProfessionalExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController

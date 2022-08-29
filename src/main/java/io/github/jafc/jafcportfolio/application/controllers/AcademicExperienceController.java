@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.AcademicExperienceServi
 import io.github.jafc.jafcportfolio.domain.model.AcademicExperience;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.AcademicExperienceResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.AcademicExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController

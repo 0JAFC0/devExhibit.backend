@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto.security;
+package io.github.jafc.jafcportfolio.presentation.dto.request;
 
 import java.io.Serializable;
 

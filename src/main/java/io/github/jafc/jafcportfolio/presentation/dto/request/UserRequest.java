@@ -1,6 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto;
-
-import java.util.List;
+package io.github.jafc.jafcportfolio.presentation.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +29,4 @@ public class UserRequest {
 
     private String field;
     
-    private List<RoleResponse> roles;
 }
