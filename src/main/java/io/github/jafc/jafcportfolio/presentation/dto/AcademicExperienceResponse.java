@@ -21,5 +21,5 @@ public class AcademicExperienceResponse {
 
     private String duration;
     
-    private UserRequest user;
+    private UserResponse user;
 }

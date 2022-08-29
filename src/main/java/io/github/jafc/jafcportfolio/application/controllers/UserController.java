@@ -66,7 +66,7 @@ public class UserController {
     	return ResponseEntity.ok(Token.builder().email(accountCredentials.getEmail()).type("Bearer ").token(token).build());
     }
 
-	@PutMapping("/user/update")
+	@PutMapping("/user/")
     public ResponseEntity<Response<UserResponse>> update(@RequestBody UserResponse userResponse) {
         return responseService.ok(modelMapperService.convert(userService.update(modelMapperService.convert(userResponse, User.class)), UserResponse.class));
     }

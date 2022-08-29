@@ -63,6 +63,14 @@ public class SkillController {
         return responseService.ok(dtos);
     }
     
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<List<SkillResponse>>> getByEmail(@PathVariable("email") String email) {
+        List<SkillResponse> dtos = skillService.getByEmail(email).stream()
+            .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
+    }
+    
     @PutMapping
     public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillResponse skill) {
         return responseService.ok(

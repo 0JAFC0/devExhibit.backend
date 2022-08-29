@@ -57,4 +57,8 @@ public class ReviewServices {
     public void deleteById(Long id) {
         reviewRepository.deleteById(id);
     }
+    
+    public List<Review> getByEmail(String email) {
+        return reviewRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+    }
 }

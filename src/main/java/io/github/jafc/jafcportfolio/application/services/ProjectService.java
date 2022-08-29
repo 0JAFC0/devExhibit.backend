@@ -22,7 +22,7 @@ public class ProjectService {
 
     public Project saveProjectUser(Project project) {
         User user = userService.findById(project.getUser().getId());
-        project.setUser(user); 
+        project.setUser(user);
         return projectRepository.save(project);
     }
 
@@ -43,11 +43,11 @@ public class ProjectService {
     }
 
     public List<Project> getProjectByUserID(Long userId) {
-        List<Project> projects = projectRepository.findProjectByUserID(userId);
-        if(projects.isEmpty()) {
-            throw new NotFoundException("Not found projects in user with id ".concat(userId.toString()));
-        }
-        return projects;
+        return projectRepository.findProjectByUserID(userId).orElseThrow(() -> new NotFoundException("Not found projects in user with id ".concat(userId.toString())));
+    }
+    
+    public List<Project> getByEmail(String email) {
+        return projectRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
     }
 
     public void deleteById(Long id) {

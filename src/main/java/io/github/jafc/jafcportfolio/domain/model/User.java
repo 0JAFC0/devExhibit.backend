@@ -1,5 +1,6 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,9 +60,10 @@ public class User implements UserDetails {
     private String field;
     
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_role",joinColumns = {@JoinColumn(name="id_user")},
+    @JoinTable(name = "users_role",
+    joinColumns = {@JoinColumn(name="id_user")},
     inverseJoinColumns = {@JoinColumn(name="id_role")})
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
     
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

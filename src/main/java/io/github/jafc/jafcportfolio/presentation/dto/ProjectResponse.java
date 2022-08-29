@@ -24,5 +24,5 @@ public class ProjectResponse {
 
     private String urlProjectGithub;
 
-    private UserRequest user;
+    private UserResponse user;
 }
