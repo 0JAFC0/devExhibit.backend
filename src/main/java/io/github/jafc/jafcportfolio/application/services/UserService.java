@@ -37,7 +37,9 @@ public class UserService implements UserDetailsService {
     
     public User saveUser(User user) {
     	log.info("Saving new User {} to the database",user.getEmail());
-    	roleRepository.save(user.getRoles().get(0));
+    	if(user.getRoles()!=null) {
+    		roleRepository.save(user.getRoles().get(0));    		
+    	}
     	// validate if the user exist
     	userRepository.findByEmail(user.getEmail()).ifPresent(element -> new UsernameFoundException("User ".concat(user.getUsername()).concat(" exist!")));
     	// encoder password

@@ -38,7 +38,8 @@ public class ProjectController {
 
     @PostMapping("/save")
     public ResponseEntity<Response<ProjectResponse>> saveProject(@RequestBody ProjectResponse project) {
-        return responseService.create(modelMapperService.convert(projectService.saveProjectUser(modelMapperService.convert(project, Project.class)), ProjectResponse.class));
+    	Project converter = projectService.saveProjectUser(modelMapperService.convert(project, Project.class));
+        return responseService.create(modelMapperService.convert(converter, ProjectResponse.class));
     }
 
     @PutMapping
@@ -51,11 +52,11 @@ public class ProjectController {
         projectService.removeProjectUser(modelMapperService.convert(project, Project.class));
         return responseService.ok("Delete Successful.");
     }
-
-    @GetMapping("/getProjectByUserID/{userId}")
-    public ResponseEntity<Response<List<ProjectResponse>>> getProjectByUserID(@PathVariable("userId") Long userId) {
-        List<ProjectResponse> dtos = projectService.getProjectByUserID(userId).stream()
-            .map(review -> modelMapperService.convert(review, ProjectResponse.class))
+    
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<List<ProjectResponse>>> getByEmail(@PathVariable("email") String email) {
+        List<ProjectResponse> dtos = projectService.getByEmail(email).stream()
+            .map(project -> modelMapperService.convert(project, ProjectResponse.class))
             .collect(Collectors.toList());
         return responseService.ok(dtos);
     }

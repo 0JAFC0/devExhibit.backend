@@ -48,6 +48,13 @@ public class ReviewController {
         reviewServices.removeReviewUser(modelMapperService.convert(review, Review.class));
         return responseService.ok("delete Successful");
     }
+    
+    @PutMapping
+    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewResponse review) {
+        return responseService.ok(
+            modelMapperService.convert(reviewServices.updateReviewUser(
+                modelMapperService.convert(review, Review.class)), ReviewResponse.class));
+    }
 
     @GetMapping
     public ResponseEntity<Response<List<ReviewResponse>>> getAll() {
@@ -65,10 +72,11 @@ public class ReviewController {
         return responseService.ok(dtos);
     }
     
-    @PutMapping
-    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewResponse review) {
-        return responseService.ok(
-            modelMapperService.convert(reviewServices.updateReviewUser(
-                modelMapperService.convert(review, Review.class)), ReviewResponse.class));
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<List<ReviewResponse>>> getByEmail(@PathVariable("email") String email) {
+        List<ReviewResponse> dtos = reviewServices.getByEmail(email).stream()
+            .map(review -> modelMapperService.convert(review, ReviewResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
     }
 }

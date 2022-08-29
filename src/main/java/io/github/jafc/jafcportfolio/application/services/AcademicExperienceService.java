@@ -41,12 +41,12 @@ public class AcademicExperienceService {
     public void deleteById(Long id) {
         academicExperienceRepository.deleteById(id);
     }
-
-    public List<AcademicExperience> getAll() {
-        return academicExperienceRepository.findAll();
-    }
     
     public List<AcademicExperience> getByEmail(String email) {
     	return academicExperienceRepository.findByEmail(email).orElseThrow(()->new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+    }
+
+    public List<AcademicExperience> getAll() {
+        return academicExperienceRepository.findAll();
     }
 }

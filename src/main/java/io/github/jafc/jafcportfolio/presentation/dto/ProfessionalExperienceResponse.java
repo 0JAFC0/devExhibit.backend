@@ -21,5 +21,5 @@ public class ProfessionalExperienceResponse {
 
     private String duration;
 
-    private UserRequest user;
+    private UserResponse user;
 }

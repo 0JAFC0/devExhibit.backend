@@ -49,6 +49,10 @@ public class SkillService {
         }
         return skills;
     }
+    
+    public List<Skill> getByEmail(String email) {
+        return skillRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+    }
 
     public List<Skill> getAll() {
         return skillRepository.findAll();
