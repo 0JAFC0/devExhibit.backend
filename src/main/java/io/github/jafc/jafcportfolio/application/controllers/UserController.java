@@ -60,8 +60,9 @@ public class UserController {
         return responseService.ok(userService.getUsers());
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<Response<User>> getById(@PathVariable Long id) {
-        return responseService.ok(userService.findById(id));
+    @GetMapping("/user/{email}")
+    public ResponseEntity<Response<User>> getById(@PathVariable String email) {
+        return responseService.ok(userService.getUser(email));
     }
+
 }
