@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.0jafc0</groupId>
-	<artifactId>jafcPortfolio</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>jafcPortfolio</name>
+	<artifactId>jafc.portfolio</artifactId>
+	<version>0.0.1</version>
+	<name>jafc.portfolio</name>
 	<description>API para guardar informações do site 0jafc0.github.io</description>
 	<properties>
 		<java.version>11</java.version>
@@ -106,6 +106,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<imageName>jafc.portfolio</imageName>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -113,6 +114,27 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<from>
+					<image>openjdk:11</image>
+					</from>
+					<to>
+					<image>0jafc0/0jafc0.backend</image>
+					</to>
+				</configuration>
+				<executions>
+					<execution>
+					<phase>verify</phase>
+					<goals>
+						<goal>dockerBuild</goal>
+					</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
