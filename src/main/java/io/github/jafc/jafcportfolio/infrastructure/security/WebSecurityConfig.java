@@ -54,10 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
     	.antMatchers(SWAGGER_WHITE_LIST).permitAll()
 		// user configs
-    	.antMatchers("/api/user/signin","/api/user/signup").permitAll()
-    	.antMatchers(HttpMethod.PUT,"/api/user/**").hasRole("ADMIN")
-		.antMatchers(HttpMethod.DELETE,"/api/user/**").hasRole("ADMIN")
-		.antMatchers(HttpMethod.GET,"/api/user/**").hasRole("ADMIN")
+    	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
+    	.antMatchers(HttpMethod.PUT, USER_URL).hasRole(ADMIN)
+		.antMatchers(HttpMethod.DELETE, USER_URL).hasRole(ADMIN)
+		.antMatchers(HttpMethod.GET, USER_URL, "/api/users/**").hasRole(ADMIN)
 		// ENDPOINTS_WHITELIST configs
     	.antMatchers(HttpMethod.GET, ENPOINTS_WHITELIST).permitAll()
     	.antMatchers(HttpMethod.DELETE, ENPOINTS_WHITELIST).hasRole("USER")
@@ -87,6 +87,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         expressionHandler.setRoleHierarchy(roleHierarchy());
         return expressionHandler;
     }
+
+	private static final String ADMIN = "ADMIN";
+	private static final String USER_URL = "/api/user/**";
     
 	private static final String[] ENPOINTS_WHITELIST = {
 		"/api/professional/**",

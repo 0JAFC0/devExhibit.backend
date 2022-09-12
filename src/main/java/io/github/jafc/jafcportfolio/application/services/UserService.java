@@ -94,8 +94,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    public boolean deleteByEmail(String email) {
+		if(!userRepository.findByEmail(email).isEmpty()){
+			userRepository.deleteByEmail(email);
+			return true;
+		}
+		
+		return false;
     }
     
     public User getUser(String email) {
