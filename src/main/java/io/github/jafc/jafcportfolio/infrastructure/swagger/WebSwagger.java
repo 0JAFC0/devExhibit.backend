@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.infrastructure.config;
+package io.github.jafc.jafcportfolio.infrastructure.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

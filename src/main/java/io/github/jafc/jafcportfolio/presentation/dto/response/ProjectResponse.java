@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto;
+package io.github.jafc.jafcportfolio.presentation.dto.response;
 
 import io.github.jafc.jafcportfolio.domain.model.CategoryEnum;
 import lombok.AllArgsConstructor;

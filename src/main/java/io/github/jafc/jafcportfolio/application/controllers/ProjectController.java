@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +19,12 @@ import io.github.jafc.jafcportfolio.application.services.ProjectService;
 import io.github.jafc.jafcportfolio.domain.model.Project;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.ProjectResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.ProjectResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/project")
+@CrossOrigin
 public class ProjectController {
     
     @Autowired
@@ -36,7 +38,8 @@ public class ProjectController {
 
     @PostMapping("/save")
     public ResponseEntity<Response<ProjectResponse>> saveProject(@RequestBody ProjectResponse project) {
-        return responseService.create(modelMapperService.convert(projectService.saveProjectUser(modelMapperService.convert(project, Project.class)), ProjectResponse.class));
+    	Project converter = projectService.saveProjectUser(modelMapperService.convert(project, Project.class));
+        return responseService.create(modelMapperService.convert(converter, ProjectResponse.class));
     }
 
     @PutMapping
@@ -49,11 +52,11 @@ public class ProjectController {
         projectService.removeProjectUser(modelMapperService.convert(project, Project.class));
         return responseService.ok("Delete Successful.");
     }
-
-    @GetMapping("/getProjectByUserID/{userId}")
-    public ResponseEntity<Response<List<ProjectResponse>>> getProjectByUserID(@PathVariable("userId") Long userId) {
-        List<ProjectResponse> dtos = projectService.getProjectByUserID(userId).stream()
-            .map(review -> modelMapperService.convert(review, ProjectResponse.class))
+    
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<List<ProjectResponse>>> getByEmail(@PathVariable("email") String email) {
+        List<ProjectResponse> dtos = projectService.getByEmail(email).stream()
+            .map(project -> modelMapperService.convert(project, ProjectResponse.class))
             .collect(Collectors.toList());
         return responseService.ok(dtos);
     }

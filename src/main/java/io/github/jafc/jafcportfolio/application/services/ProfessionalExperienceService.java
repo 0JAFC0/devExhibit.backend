@@ -41,9 +41,12 @@ public class ProfessionalExperienceService {
     public void deleteById(Long id) {
         professionalExperienceRepository.deleteById(id);
     }
+    
+    public List<ProfessionalExperience> getByEmail(String email) {
+        return professionalExperienceRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user with email".concat(email)));
+    }
 
     public List<ProfessionalExperience> getAll() {
         return professionalExperienceRepository.findAll();
     }
-
 }
