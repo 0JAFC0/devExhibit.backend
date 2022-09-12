@@ -1,4 +1,6 @@
-package io.github.jafc.jafcportfolio.presentation.dto;
+package io.github.jafc.jafcportfolio.presentation.dto.response;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse {
-
-    private Long id;
-
-    private String name;
-
-    private String password;
+    
+	private Long id;
+	
+    private String fullname;
+    
+    private String email;
 
     private Integer age;
 
@@ -26,4 +28,6 @@ public class UserResponse {
     private String imageBase64;
 
     private String field;
+    
+    private List<RoleResponse> roles;
 }

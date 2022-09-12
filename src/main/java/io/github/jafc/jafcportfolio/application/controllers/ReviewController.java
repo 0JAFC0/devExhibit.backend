@@ -19,7 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ReviewServices;
 import io.github.jafc.jafcportfolio.domain.model.Review;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
-import io.github.jafc.jafcportfolio.presentation.dto.ReviewResponse;
+import io.github.jafc.jafcportfolio.presentation.dto.response.ReviewResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 import io.swagger.annotations.Api;
 
@@ -46,7 +46,14 @@ public class ReviewController {
     @DeleteMapping
     public ResponseEntity<Response<String>> deleteSkill(@RequestBody ReviewResponse review) {
         reviewServices.removeReviewUser(modelMapperService.convert(review, Review.class));
-        return responseService.create("delete Successful");
+        return responseService.ok("delete Successful");
+    }
+    
+    @PutMapping
+    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewResponse review) {
+        return responseService.ok(
+            modelMapperService.convert(reviewServices.updateReviewUser(
+                modelMapperService.convert(review, Review.class)), ReviewResponse.class));
     }
 
     @GetMapping
@@ -65,10 +72,11 @@ public class ReviewController {
         return responseService.ok(dtos);
     }
     
-    @PutMapping
-    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewResponse review) {
-        return responseService.ok(
-            modelMapperService.convert(reviewServices.updateReviewUser(
-                modelMapperService.convert(review, Review.class)), ReviewResponse.class));
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<List<ReviewResponse>>> getByEmail(@PathVariable("email") String email) {
+        List<ReviewResponse> dtos = reviewServices.getByEmail(email).stream()
+            .map(review -> modelMapperService.convert(review, ReviewResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
     }
 }

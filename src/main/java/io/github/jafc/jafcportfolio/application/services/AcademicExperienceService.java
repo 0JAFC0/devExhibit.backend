@@ -13,7 +13,7 @@ import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.Academ
 
 @Service
 public class AcademicExperienceService {
-
+	
     @Autowired
     private UserService userService;
     
@@ -40,6 +40,10 @@ public class AcademicExperienceService {
 
     public void deleteById(Long id) {
         academicExperienceRepository.deleteById(id);
+    }
+    
+    public List<AcademicExperience> getByEmail(String email) {
+    	return academicExperienceRepository.findByEmail(email).orElseThrow(()->new NotFoundException("The user with email ".concat(email).concat(" not found!")));
     }
 
     public List<AcademicExperience> getAll() {
