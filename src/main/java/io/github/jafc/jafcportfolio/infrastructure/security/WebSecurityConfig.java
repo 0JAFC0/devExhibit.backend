@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, USER_URL, "/api/users/**").hasRole(ADMIN)
 		// ENDPOINTS_WHITELIST configs
     	.antMatchers(HttpMethod.GET, ENPOINTS_WHITELIST).permitAll()
+		.antMatchers(HttpMethod.GET, USER_URL).permitAll()
     	.antMatchers(HttpMethod.DELETE, ENPOINTS_WHITELIST).hasRole("USER")
 		.antMatchers(HttpMethod.PUT, ENPOINTS_WHITELIST).hasRole("USER")
 		.antMatchers(HttpMethod.POST, ENPOINTS_WHITELIST).hasRole("USER")
