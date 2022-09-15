@@ -1,6 +1,7 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,13 +58,17 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<Response<List<User>>> getAll() {
-        return responseService.ok(userService.getUsers());
+    public ResponseEntity<Response<List<UserResponse>>> getAll() {
+        List<UserResponse> dtos = userService.getUsers().stream()
+            .map(skill -> modelMapperService.convert(skill, UserResponse.class))
+            .collect(Collectors.toList());
+        return responseService.ok(dtos);
     }
 
     @GetMapping("/user/{email}")
-    public ResponseEntity<Response<User>> getById(@PathVariable String email) {
-        return responseService.ok(userService.getUser(email));
+    public ResponseEntity<Response<UserResponse>> getById(@PathVariable String email) {
+        UserResponse user = modelMapperService.convert(userService.getUser(email), UserResponse.class);
+        return responseService.ok(user);
     }
 
     @DeleteMapping("/user/{email}")
