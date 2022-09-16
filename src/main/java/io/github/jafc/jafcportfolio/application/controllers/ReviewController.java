@@ -26,7 +26,7 @@ import io.swagger.annotations.Api;
 @Api(value = "End Point do review")
 @RestController
 @RequestMapping("/api/review")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ReviewController {
     
     @Autowired

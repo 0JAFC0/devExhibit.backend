@@ -24,7 +24,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/professional")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ProfessionalExperienceController {
     
     @Autowired

@@ -29,7 +29,7 @@ import io.swagger.annotations.Api;
 @Api(value = "End Point do usuario")
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UserController {
     
     @Autowired
