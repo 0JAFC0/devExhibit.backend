@@ -24,7 +24,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/project")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = {"http://localhost:4200/","https://jafc-backend.herokuapp.com/"})
 public class ProjectController {
     
     @Autowired
