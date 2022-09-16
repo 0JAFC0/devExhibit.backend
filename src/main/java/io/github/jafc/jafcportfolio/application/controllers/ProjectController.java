@@ -24,7 +24,7 @@ import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
 @RestController
 @RequestMapping("/api/project")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ProjectController {
     
     @Autowired
