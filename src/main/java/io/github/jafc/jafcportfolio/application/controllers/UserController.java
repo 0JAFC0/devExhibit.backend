@@ -29,7 +29,7 @@ import io.swagger.annotations.Api;
 @Api(value = "End Point do usuario")
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = {"http://localhost:4200/","https://jafc-backend.herokuapp.com/"})
 public class UserController {
     
     @Autowired
