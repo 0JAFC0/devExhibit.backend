@@ -29,4 +29,5 @@ public class UserRequest {
 
     private String field;
     
+    private String about;
 }

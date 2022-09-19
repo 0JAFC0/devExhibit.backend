@@ -55,6 +55,9 @@ public class User implements Serializable{
 
     @Column(nullable = false)
     private String field;
+
+    @Column(nullable = false)
+    private String about;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_role",
