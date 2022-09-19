@@ -24,5 +24,7 @@ public class UserResponse {
     private String imageBase64;
 
     private String field;
+
+    private String about;
     
 }
