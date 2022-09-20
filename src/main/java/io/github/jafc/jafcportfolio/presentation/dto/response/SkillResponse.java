@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.presentation.dto.response;
 
 import io.github.jafc.jafcportfolio.domain.model.TypeSkillEnum;
-import io.github.jafc.jafcportfolio.presentation.dto.request.UserRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +20,5 @@ public class SkillResponse {
 
     private TypeSkillEnum type;
     
-    private UserRequest user;
+    private UserResponse user;
 }
