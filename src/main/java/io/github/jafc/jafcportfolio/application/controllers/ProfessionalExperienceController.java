@@ -19,6 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ProfessionalExperienceS
 import io.github.jafc.jafcportfolio.domain.model.ProfessionalExperience;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.presentation.dto.request.ProfessionalExperienceRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ProfessionalExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
@@ -37,17 +38,17 @@ public class ProfessionalExperienceController {
     private ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<ProfessionalExperienceResponse>> saveExperienceUser(@RequestBody ProfessionalExperienceResponse experience) {
+    public ResponseEntity<Response<ProfessionalExperienceResponse>> saveExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
         return responseService.create(modelMapperService.convert(experienceService.saveProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
     }
 
     @PutMapping
-    public ResponseEntity<Response<ProfessionalExperienceResponse>> updateExperienceUser(@RequestBody ProfessionalExperienceResponse experience) {
+    public ResponseEntity<Response<ProfessionalExperienceResponse>> updateExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
         return responseService.ok(modelMapperService.convert(experienceService.updateProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody ProfessionalExperienceResponse experience) {
+    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
         experienceService.deleteProfessional(modelMapperService.convert(experience, ProfessionalExperience.class));
         return responseService.ok("delete Successful");
     }

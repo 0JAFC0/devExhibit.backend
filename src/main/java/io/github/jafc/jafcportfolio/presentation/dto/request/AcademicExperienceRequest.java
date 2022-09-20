@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto.response;
+package io.github.jafc.jafcportfolio.presentation.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +9,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfessionalExperienceResponse {
+public class AcademicExperienceRequest {
+    
+    private Long id;
 
     private String name;
 
-    private String post;
+    private String institution;
 
     private String description;
 
     private String duration;
-
-    private UserResponse user;
+    
+    private UserRequest user;
 }

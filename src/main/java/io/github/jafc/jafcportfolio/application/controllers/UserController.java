@@ -58,9 +58,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<Response<List<UserResponse>>> getAll() {
-        List<UserResponse> dtos = userService.getUsers().stream()
-            .map(skill -> modelMapperService.convert(skill, UserResponse.class))
+    public ResponseEntity<Response<List<UserRequest>>> getAll() {
+        List<UserRequest> dtos = userService.getUsers().stream()
+            .map(skill -> modelMapperService.convert(skill, UserRequest.class))
             .collect(Collectors.toList());
         return responseService.ok(dtos);
     }

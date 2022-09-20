@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto.response;
+package io.github.jafc.jafcportfolio.presentation.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfessionalExperienceResponse {
+public class ProfessionalExperienceRequest {
+    
+    private Long id;
 
     private String name;
 
@@ -19,5 +21,5 @@ public class ProfessionalExperienceResponse {
 
     private String duration;
 
-    private UserResponse user;
+    private UserRequest user;
 }
