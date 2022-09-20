@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -19,7 +18,6 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false)
 @DynamicUpdate
 @Entity
-@Table(name = "academic_experience")
 public class AcademicExperience extends Experience{
 
     private String institution;
