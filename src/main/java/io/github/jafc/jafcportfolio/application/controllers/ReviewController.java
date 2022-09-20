@@ -19,6 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ReviewServices;
 import io.github.jafc.jafcportfolio.domain.model.Review;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.presentation.dto.request.ReviewRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ReviewResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 import io.swagger.annotations.Api;
@@ -39,18 +40,18 @@ public class ReviewController {
     private ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<ReviewResponse>> save(@RequestBody ReviewResponse reviewResponse) {
+    public ResponseEntity<Response<ReviewResponse>> save(@RequestBody ReviewRequest reviewResponse) {
         return responseService.create(modelMapperService.convert(reviewServices.saveReviewUser(modelMapperService.convert(reviewResponse, Review.class)),ReviewResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteSkill(@RequestBody ReviewResponse review) {
+    public ResponseEntity<Response<String>> deleteSkill(@RequestBody ReviewRequest review) {
         reviewServices.removeReviewUser(modelMapperService.convert(review, Review.class));
         return responseService.ok("delete Successful");
     }
     
     @PutMapping
-    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewResponse review) {
+    public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewRequest review) {
         return responseService.ok(
             modelMapperService.convert(reviewServices.updateReviewUser(
                 modelMapperService.convert(review, Review.class)), ReviewResponse.class));

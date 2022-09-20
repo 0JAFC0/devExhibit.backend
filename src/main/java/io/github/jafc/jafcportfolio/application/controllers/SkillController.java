@@ -19,6 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.SkillService;
 import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.presentation.dto.request.SkillRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.SkillResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
@@ -37,12 +38,12 @@ public class SkillController {
     private ResponseService responseService;
     
     @PostMapping("/save")
-    public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillResponse skill) {
+    public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillRequest skill) {
         return responseService.create(modelMapperService.convert(skillService.saveSkillUser(modelMapperService.convert(skill, Skill.class)),SkillResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillResponse skill) {
+    public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillRequest skill) {
         skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class));
         return responseService.ok("delete Successful");
     }
@@ -72,7 +73,7 @@ public class SkillController {
     }
     
     @PutMapping
-    public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillResponse skill) {
+    public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillRequest skill) {
         return responseService.ok(
             modelMapperService.convert(skillService.updateSkill(
                 modelMapperService.convert(skill, Skill.class)), SkillResponse.class));

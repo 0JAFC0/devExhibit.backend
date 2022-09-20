@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.presentation.dto.response;
+package io.github.jafc.jafcportfolio.presentation.dto.request;
 
 import io.github.jafc.jafcportfolio.domain.model.CategoryEnum;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectResponse {
+public class ProjectRequest {
     
+    private Long id;
+
     private String name;
 
     private String description;
@@ -22,5 +24,5 @@ public class ProjectResponse {
 
     private String urlProjectGithub;
 
-    private UserResponse user;
+    private UserRequest user;
 }

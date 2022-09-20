@@ -19,6 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.ProjectService;
 import io.github.jafc.jafcportfolio.domain.model.Project;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.presentation.dto.request.ProjectRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ProjectResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
@@ -37,18 +38,18 @@ public class ProjectController {
     private ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<ProjectResponse>> saveProject(@RequestBody ProjectResponse project) {
+    public ResponseEntity<Response<ProjectResponse>> saveProject(@RequestBody ProjectRequest project) {
     	Project converter = projectService.saveProjectUser(modelMapperService.convert(project, Project.class));
         return responseService.create(modelMapperService.convert(converter, ProjectResponse.class));
     }
 
     @PutMapping
-    public ResponseEntity<Response<ProjectResponse>> updateProject(@RequestBody ProjectResponse project) {
+    public ResponseEntity<Response<ProjectResponse>> updateProject(@RequestBody ProjectRequest project) {
         return responseService.ok(modelMapperService.convert(projectService.updateProjectUser(modelMapperService.convert(project, Project.class)), ProjectResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteProject(@RequestBody ProjectResponse project) {
+    public ResponseEntity<Response<String>> deleteProject(@RequestBody ProjectRequest project) {
         projectService.removeProjectUser(modelMapperService.convert(project, Project.class));
         return responseService.ok("Delete Successful.");
     }

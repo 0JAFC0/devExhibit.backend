@@ -19,6 +19,7 @@ import io.github.jafc.jafcportfolio.application.services.AcademicExperienceServi
 import io.github.jafc.jafcportfolio.domain.model.AcademicExperience;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
 import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.presentation.dto.request.AcademicExperienceRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.AcademicExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
 
@@ -37,17 +38,17 @@ public class AcademicExperienceController {
     private ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<AcademicExperienceResponse>> saveExperienceUser(@RequestBody AcademicExperienceResponse experience) {
+    public ResponseEntity<Response<AcademicExperienceResponse>> saveExperienceUser(@RequestBody AcademicExperienceRequest experience) {
         return responseService.create(modelMapperService.convert(academicExperienceService.saveAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
     }
 
     @PutMapping
-    public ResponseEntity<Response<AcademicExperienceResponse>> updateExperienceUser(@RequestBody AcademicExperienceResponse experience) {
+    public ResponseEntity<Response<AcademicExperienceResponse>> updateExperienceUser(@RequestBody AcademicExperienceRequest experience) {
         return responseService.ok(modelMapperService.convert(academicExperienceService.updateAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody AcademicExperienceResponse experience) {
+    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody AcademicExperienceRequest experience) {
         academicExperienceService.deleteAcademic(modelMapperService.convert(experience, AcademicExperience.class));
         return responseService.ok("delete Successful");
     }
