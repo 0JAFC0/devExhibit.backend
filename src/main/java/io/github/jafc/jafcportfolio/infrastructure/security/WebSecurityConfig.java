@@ -55,11 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	.antMatchers(SWAGGER_WHITE_LIST).permitAll()
 		// user configs
     	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
-    	.antMatchers(HttpMethod.PUT, USER_URL).hasRole(ADMIN)
-		.antMatchers(HttpMethod.DELETE, USER_URL).hasRole(ADMIN)
+    	.antMatchers(HttpMethod.PUT, USER_ENDPOINT).hasRole(ADMIN)
+		.antMatchers(HttpMethod.DELETE, USER_ENDPOINT).hasRole(ADMIN)
 		.antMatchers(HttpMethod.GET, ENDPOINTS_GETBLACKLIST).hasRole(ADMIN)
 		// ENDPOINTS_WHITELIST configs
     	.antMatchers(HttpMethod.GET, ENDPOINTS_WHITELIST).permitAll()
+		.antMatchers(HttpMethod.GET, USER_ENDPOINT).permitAll()
     	.antMatchers(HttpMethod.DELETE, ENDPOINTS_WHITELIST).hasRole("USER")
 		.antMatchers(HttpMethod.PUT, ENDPOINTS_WHITELIST).hasRole("USER")
     	.anyRequest().denyAll()
@@ -89,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// Contants
 	private static final String ADMIN = "ADMIN";
-	private static final String USER_URL = "/api/user/**";
+	private static final String USER_ENDPOINT = "/api/user/**";
     
 	private static final String[] ENDPOINTS_GETBLACKLIST = {
 		"/api/professional/professionals",
