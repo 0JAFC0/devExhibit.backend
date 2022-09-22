@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.SkillService;
 import io.github.jafc.jafcportfolio.domain.model.Skill;
-import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
-import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.request.SkillRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.SkillResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
@@ -48,28 +47,19 @@ public class SkillController {
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping
+    @GetMapping("/skills")
     public ResponseEntity<Response<List<SkillResponse>>> getAll() {
-        List<SkillResponse> dtos = skillService.getAll().stream()
-            .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(skillService.getAll(), SkillResponse.class));
     }
 
     @GetMapping("/getSkillByUserID/{userId}")
     public ResponseEntity<Response<List<SkillResponse>>> getSkillByUserID(@PathVariable("userId") Long userId) {
-        List<SkillResponse> dtos = skillService.getSkillsByUserID(userId).stream()
-            .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(skillService.getSkillsByUserID(userId), SkillResponse.class));
     }
     
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<SkillResponse>>> getByEmail(@PathVariable("email") String email) {
-        List<SkillResponse> dtos = skillService.getByEmail(email).stream()
-            .map(skill -> modelMapperService.convert(skill, SkillResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(skillService.getByEmail(email), SkillResponse.class));
     }
     
     @PutMapping

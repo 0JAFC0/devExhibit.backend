@@ -26,7 +26,7 @@ public abstract class Experience {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 950)
+    @Column(unique = true, length = 950)
     private String name;
 
     @Column()

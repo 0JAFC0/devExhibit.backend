@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.ProfessionalExperienceService;
 import io.github.jafc.jafcportfolio.domain.model.ProfessionalExperience;
-import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
-import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.request.ProfessionalExperienceRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ProfessionalExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
@@ -53,19 +52,13 @@ public class ProfessionalExperienceController {
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping
+    @GetMapping("/professionals")
     public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getAll() {
-        List<ProfessionalExperienceResponse> dtos = experienceService.getAll().stream()
-            .map(experience -> modelMapperService.convert(experience, ProfessionalExperienceResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(experienceService.getAll(), ProfessionalExperienceResponse.class));
     }
     
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByEmail(@PathVariable String email) {
-        List<ProfessionalExperienceResponse> dtos = experienceService.getByEmail(email).stream()
-            .map(experience -> modelMapperService.convert(experience, ProfessionalExperienceResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(experienceService.getByEmail(email), ProfessionalExperienceResponse.class));
     }
 }

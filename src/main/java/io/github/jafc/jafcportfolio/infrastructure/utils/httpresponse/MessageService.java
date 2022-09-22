@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse;
+package io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse;
 
 import java.nio.file.Path;
 

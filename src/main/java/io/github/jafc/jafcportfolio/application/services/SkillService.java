@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.domain.model.User;
+import io.github.jafc.jafcportfolio.infrastructure.exceptions.ExistException;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.NotFoundException;
 import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.SkillRepository;
 
@@ -21,6 +22,9 @@ public class SkillService {
     private UserService userService;
 
     public Skill saveSkillUser(Skill skill) {
+        if(skillRepository.existsByName(skill.getName())) {
+            throw new ExistException("Já existe uma skill com esse nome");
+        }
         User user = userService.findById(skill.getUser().getId());
         skill.setUser(user);
         return skillRepository.save(skill);

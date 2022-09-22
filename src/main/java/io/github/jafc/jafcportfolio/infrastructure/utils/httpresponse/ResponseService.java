@@ -1,4 +1,4 @@
-package io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse;
+package io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

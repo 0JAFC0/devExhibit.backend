@@ -16,6 +16,9 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
     @Query(value = "SELECT * FROM Skill s where s.user_id = :userId",nativeQuery = true)
     public List<Skill> findSkillsByUserID(@Param("userId") Long userId);
     
-    @Query(value = "SELECT * FROM skill s WHERE (s.user_id = (SELECT id FROM users u WHERE u.email = :email))", nativeQuery = true)
+    @Query(value = "SELECT * FROM Skill s WHERE (s.user_id = (SELECT id FROM users u WHERE u.email = :email))", nativeQuery = true)
 	public Optional<List<Skill>> findByEmail(@Param("email") String email);
+
+    boolean existsByName(String name);
+    
 }
