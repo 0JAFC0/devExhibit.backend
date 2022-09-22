@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.ReviewServices;
 import io.github.jafc.jafcportfolio.domain.model.Review;
-import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
-import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.request.ReviewRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ReviewResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
@@ -57,27 +56,18 @@ public class ReviewController {
                 modelMapperService.convert(review, Review.class)), ReviewResponse.class));
     }
 
-    @GetMapping
+    @GetMapping("/reviews")
     public ResponseEntity<Response<List<ReviewResponse>>> getAll() {
-        List<ReviewResponse> dtos = reviewServices.getAll().stream()
-            .map(review -> modelMapperService.convert(review, ReviewResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(reviewServices.getAll(), ReviewResponse.class));
     }
 
     @GetMapping("/getReviewByUserID/{userId}")
     public ResponseEntity<Response<List<ReviewResponse>>> getReviewByUserID(@PathVariable("userId") Long userId) {
-        List<ReviewResponse> dtos = reviewServices.getReviewsByUserID(userId).stream()
-            .map(review -> modelMapperService.convert(review, ReviewResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(reviewServices.getReviewsByUserID(userId), ReviewResponse.class));
     }
     
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<ReviewResponse>>> getByEmail(@PathVariable("email") String email) {
-        List<ReviewResponse> dtos = reviewServices.getByEmail(email).stream()
-            .map(review -> modelMapperService.convert(review, ReviewResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(reviewServices.getByEmail(email), ReviewResponse.class));
     }
 }

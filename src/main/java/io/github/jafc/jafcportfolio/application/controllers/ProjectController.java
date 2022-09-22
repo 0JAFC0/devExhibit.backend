@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.ProjectService;
 import io.github.jafc.jafcportfolio.domain.model.Project;
-import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
-import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.request.ProjectRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ProjectResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
@@ -56,17 +55,11 @@ public class ProjectController {
     
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<ProjectResponse>>> getByEmail(@PathVariable("email") String email) {
-        List<ProjectResponse> dtos = projectService.getByEmail(email).stream()
-            .map(project -> modelMapperService.convert(project, ProjectResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(projectService.getByEmail(email), ProjectResponse.class));
     }
 
-    @GetMapping
+    @GetMapping("/projects")
     public ResponseEntity<Response<List<ProjectResponse>>> getAll() {
-        List<ProjectResponse> dtos = projectService.getAll().stream()
-            .map(project -> modelMapperService.convert(project, ProjectResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(projectService.getAll(), ProjectResponse.class));
     }
 }

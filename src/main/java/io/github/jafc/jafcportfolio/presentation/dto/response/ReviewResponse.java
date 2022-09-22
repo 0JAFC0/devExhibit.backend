@@ -11,8 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReviewResponse {
     
-    private Long id;
-
     private String title;
 
     private String content;

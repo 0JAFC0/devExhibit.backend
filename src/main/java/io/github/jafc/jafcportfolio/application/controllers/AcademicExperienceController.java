@@ -1,7 +1,6 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jafc.jafcportfolio.application.services.AcademicExperienceService;
 import io.github.jafc.jafcportfolio.domain.model.AcademicExperience;
-import io.github.jafc.jafcportfolio.infrastructure.utils.httpResponse.ResponseService;
-import io.github.jafc.jafcportfolio.infrastructure.utils.modelMapper.ModelMapperService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
+import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapperService;
 import io.github.jafc.jafcportfolio.presentation.dto.request.AcademicExperienceRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.AcademicExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
@@ -53,19 +52,13 @@ public class AcademicExperienceController {
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping
+    @GetMapping("/academics")
     public ResponseEntity<Response<List<AcademicExperienceResponse>>> getAll() {
-        List<AcademicExperienceResponse> dtos = academicExperienceService.getAll().stream()
-            .map(experience -> modelMapperService.convert(experience, AcademicExperienceResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(academicExperienceService.getAll(), AcademicExperienceResponse.class));
     }
     
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<AcademicExperienceResponse>>> getByEmail(@PathVariable String email) {
-        List<AcademicExperienceResponse> dtos = academicExperienceService.getByEmail(email).stream()
-            .map(experience -> modelMapperService.convert(experience, AcademicExperienceResponse.class))
-            .collect(Collectors.toList());
-        return responseService.ok(dtos);
+        return responseService.ok(modelMapperService.convertList(academicExperienceService.getByEmail(email), AcademicExperienceResponse.class));
     }
 }

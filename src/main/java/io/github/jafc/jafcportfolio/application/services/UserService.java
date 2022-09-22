@@ -103,7 +103,7 @@ public class UserService {
 		return false;
     }
     
-    public User getUser(String email) {
+    public User getUserByEmail(String email) {
     	log.info("get User {} to the database",email);
     	return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email ".concat(email).concat(" not found in the database!")));
     }

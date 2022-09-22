@@ -57,13 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
     	.antMatchers(HttpMethod.PUT, USER_URL).hasRole(ADMIN)
 		.antMatchers(HttpMethod.DELETE, USER_URL).hasRole(ADMIN)
-		.antMatchers(HttpMethod.GET, USER_URL, "/api/users/**").hasRole(ADMIN)
+		.antMatchers(HttpMethod.GET, ENDPOINTS_GETBLACKLIST).hasRole(ADMIN)
 		// ENDPOINTS_WHITELIST configs
-    	.antMatchers(HttpMethod.GET, ENPOINTS_WHITELIST).permitAll()
-		.antMatchers(HttpMethod.GET, USER_URL).permitAll()
-    	.antMatchers(HttpMethod.DELETE, ENPOINTS_WHITELIST).hasRole("USER")
-		.antMatchers(HttpMethod.PUT, ENPOINTS_WHITELIST).hasRole("USER")
-		.antMatchers(HttpMethod.POST, ENPOINTS_WHITELIST).hasRole("USER")
+    	.antMatchers(HttpMethod.GET, ENDPOINTS_WHITELIST).permitAll()
+    	.antMatchers(HttpMethod.DELETE, ENDPOINTS_WHITELIST).hasRole("USER")
+		.antMatchers(HttpMethod.PUT, ENDPOINTS_WHITELIST).hasRole("USER")
     	.anyRequest().denyAll()
     	.and()
     	.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
@@ -89,10 +87,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return expressionHandler;
     }
 
+	// Contants
 	private static final String ADMIN = "ADMIN";
 	private static final String USER_URL = "/api/user/**";
     
-	private static final String[] ENPOINTS_WHITELIST = {
+	private static final String[] ENDPOINTS_GETBLACKLIST = {
+		"/api/professional/professionals",
+		"/api/academic/academics",
+		"/api/project/projects",
+		"/api/review/reviews",
+		"/api/skill/skills",
+		"/api/user/users"
+	};
+
+	private static final String[] ENDPOINTS_WHITELIST = {
 		"/api/professional/**",
 		"/api/academic/**",
 		"/api/project/**",
