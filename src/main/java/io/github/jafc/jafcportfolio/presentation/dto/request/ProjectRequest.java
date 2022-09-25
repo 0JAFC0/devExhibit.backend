@@ -12,8 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProjectRequest {
     
-    private Long id;
-
     private String name;
 
     private String description;

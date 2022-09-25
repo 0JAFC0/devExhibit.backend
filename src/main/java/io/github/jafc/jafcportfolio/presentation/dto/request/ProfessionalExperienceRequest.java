@@ -11,8 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProfessionalExperienceRequest {
     
-    private Long id;
-
     private String name;
 
     private String post;
