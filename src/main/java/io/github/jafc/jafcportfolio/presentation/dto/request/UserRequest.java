@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserRequest {
 
+    private Long id;
+
     private String fullname;
     
     private String password;

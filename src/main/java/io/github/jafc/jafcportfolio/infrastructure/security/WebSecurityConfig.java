@@ -53,16 +53,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	.expressionHandler(webSecurityExpressionHandler())
 		
     	.antMatchers(SWAGGER_WHITE_LIST).permitAll()
-		// user configs
-    	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
+		// configs hasRoles
     	.antMatchers(HttpMethod.PUT, USER_ENDPOINT).hasRole(ADMIN)
 		.antMatchers(HttpMethod.DELETE, USER_ENDPOINT).hasRole(ADMIN)
 		.antMatchers(HttpMethod.GET, ENDPOINTS_GETBLACKLIST).hasRole(ADMIN)
-		// ENDPOINTS_WHITELIST configs
-    	.antMatchers(HttpMethod.GET, ENDPOINTS_WHITELIST).permitAll()
-		.antMatchers(HttpMethod.GET, USER_ENDPOINT).permitAll()
     	.antMatchers(HttpMethod.DELETE, ENDPOINTS_WHITELIST).hasRole("USER")
 		.antMatchers(HttpMethod.PUT, ENDPOINTS_WHITELIST).hasRole("USER")
+		.antMatchers(HttpMethod.POST, ENDPOINTS_WHITELIST).hasRole("USER")
+		// ENDPOINTS_WHITELIST configs
+    	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
+    	.antMatchers(HttpMethod.GET, ENDPOINTS_WHITELIST).permitAll()
+		.antMatchers(HttpMethod.GET, USER_ENDPOINT).permitAll()
     	.anyRequest().denyAll()
     	.and()
     	.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
