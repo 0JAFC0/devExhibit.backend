@@ -29,7 +29,7 @@ public abstract class Experience {
     @Column(unique = true, length = 950)
     private String name;
 
-    @Column()
+    @Column(length = 400)
     private String description;
 
     @Column(length = 9)
