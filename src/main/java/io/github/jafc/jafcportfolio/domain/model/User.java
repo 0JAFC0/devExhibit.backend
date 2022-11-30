@@ -60,6 +60,8 @@ public class User implements Serializable{
 
     @Column(nullable = false)
     private String about;
+
+    private boolean isMaintence;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_role",
