@@ -3,17 +3,14 @@ package io.github.jafc0.jafcPortfolio.integrationTests.controller;
 import static io.restassured.RestAssured.given;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.runner.RunWith;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import io.github.jafc.jafcportfolio.JafcPortfolioApplication;
 import io.github.jafc.jafcportfolio.presentation.dto.request.AccountCredentials;
 import io.github.jafc.jafcportfolio.presentation.dto.request.UserRequest;
-import io.github.jafc.jafcportfolio.presentation.dto.response.Token;
 import io.github.jafc0.configs.TestConfigs;
 import io.github.jafc0.jafcPortfolio.integrationTests.JafcPortfolioApplicationTests;
 import io.restassured.builder.RequestSpecBuilder;
@@ -79,7 +76,7 @@ public class UserControllerTest extends JafcPortfolioApplicationTests {
 				.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
 			.build();
 
-		var content = given().spec(specification)
+		given().spec(specification)
 				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.body(user)
 					.when()
