@@ -14,7 +14,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           username: ${{ secrets.SSH_USERNAME }}
           script: |
-            mkdir temp
-            cd temp
             git clone git@github.com:0JAFC0/0jafc0.backend.git
+            docker compose up --build
             echo 'Deployment sucessfull to digital ocean'
