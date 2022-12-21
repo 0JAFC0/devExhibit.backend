@@ -16,6 +16,6 @@ jobs:
           script: |
             rm 0jafc0.backend/ -r
             git clone git@github.com:0JAFC0/0jafc0.backend.git
-            docker compose down
+            docker image rm 0jafc0/0jafc0.backend -f
             docker compose up --detach
             echo 'Deployment sucessfull to digital ocean'
