@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AcademicExperienceResponse {
 
+    private Long id;
+
     private String name;
 
     private String institution;

@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SkillResponse {
+
+    private Long id;
     
     private String name;
 
