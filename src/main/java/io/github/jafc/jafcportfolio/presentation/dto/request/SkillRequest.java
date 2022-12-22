@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SkillRequest {
     
+    private Long id;
+
     private String name;
 
     private Integer percentagem;
