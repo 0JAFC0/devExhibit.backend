@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT, ENDPOINTS_WHITELIST).hasRole("USER")
 		.antMatchers(HttpMethod.POST, ENDPOINTS_WHITELIST).hasRole("USER")
 		// ENDPOINTS_WHITELIST configs
-    	.antMatchers( "/api/user/signin", "/api/user/signup").permitAll()
+    	.antMatchers( "/api/user/signin", "/api/user/signup", "/api/user/getById/**").permitAll()
     	.antMatchers(HttpMethod.GET, ENDPOINTS_WHITELIST).permitAll()
 		.antMatchers(HttpMethod.GET, USER_ENDPOINT).permitAll()
     	.anyRequest().denyAll()

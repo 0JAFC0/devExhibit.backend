@@ -28,7 +28,7 @@ import io.swagger.annotations.Api;
 @Api(value = "End Point do usuario")
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = {"http://127.0.0.1:4200/","https://jafc-backend.herokuapp.com/"})
+@CrossOrigin(origins = {"http://127.0.0.1:4200/","https://0jafc0.github.io/"})
 public class UserController {
     
     @Autowired
@@ -59,6 +59,11 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<Response<List<UserResponse>>> getAll() {
         return responseService.ok(modelMapperService.convertList(userService.getUsers(), UserResponse.class));
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<Response<UserResponse>> getById(@PathVariable Long id) {
+        return responseService.ok(modelMapperService.convert(userService.findById(id), UserResponse.class));
     }
 
     @GetMapping("/{email}")
