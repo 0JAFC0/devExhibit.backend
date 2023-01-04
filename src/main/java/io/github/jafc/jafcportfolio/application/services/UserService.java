@@ -116,4 +116,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("The user with id ".concat(id.toString()).concat(" not exist.")));
     }
 
+	public boolean userByIdExist(Long id) {
+        return userRepository.existsById(id);
+    }
 }
