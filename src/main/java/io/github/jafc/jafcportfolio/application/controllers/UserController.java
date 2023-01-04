@@ -61,6 +61,11 @@ public class UserController {
         return responseService.ok(modelMapperService.convertList(userService.getUsers(), UserResponse.class));
     }
 
+    @GetMapping("/userByIdExist/{id}")
+    public ResponseEntity<Response<Boolean>> userByIdExist(@PathVariable Long id) {
+        return responseService.ok(userService.userByIdExist(id));
+    }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<Response<UserResponse>> getById(@PathVariable Long id) {
         return responseService.ok(modelMapperService.convert(userService.findById(id), UserResponse.class));
