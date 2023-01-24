@@ -52,7 +52,7 @@ public class User implements Serializable{
     @Column(name = "live_in", nullable = false)
     private String liveIn;
 
-    @Column(name = "image_base64")
+    @Column(name = "image_base64",length = 6126121)
     private String imageBase64;
 
     @Column(nullable = false)
