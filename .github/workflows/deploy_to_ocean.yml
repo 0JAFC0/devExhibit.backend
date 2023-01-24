@@ -1,14 +1,14 @@
 name: build & deploy
 on:
   push:
-    branches: [main]
+    branches: [master]
     
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: SSH Remote Commands
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
