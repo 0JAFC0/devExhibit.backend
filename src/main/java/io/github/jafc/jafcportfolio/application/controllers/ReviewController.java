@@ -61,7 +61,7 @@ public class ReviewController {
         return responseService.ok(modelMapperService.convertList(reviewServices.getAll(), ReviewResponse.class));
     }
 
-    @GetMapping("/getReviewByUserID/{userId}")
+    @GetMapping("/getReviewByUserId/{userId}")
     public ResponseEntity<Response<List<ReviewResponse>>> getReviewByUserID(@PathVariable("userId") Long userId) {
         return responseService.ok(modelMapperService.convertList(reviewServices.getReviewsByUserID(userId), ReviewResponse.class));
     }

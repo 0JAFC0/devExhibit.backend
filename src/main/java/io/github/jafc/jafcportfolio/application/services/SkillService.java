@@ -46,8 +46,8 @@ public class SkillService {
         skillRepository.deleteById(skill.getId());
     }
 
-    public List<Skill> getSkillsByUserID(Long userId) {
-        List<Skill> skills = skillRepository.findSkillsByUserID(userId);
+    public List<Skill> getByUserId(Long userId) {
+        List<Skill> skills = skillRepository.findSkillsByUserId(userId);
         if(skills.isEmpty()) {
             throw new NotFoundException("Not found skills in user with id ".concat(userId.toString()));
         }

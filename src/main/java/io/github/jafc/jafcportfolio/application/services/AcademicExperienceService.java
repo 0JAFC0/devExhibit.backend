@@ -46,6 +46,10 @@ public class AcademicExperienceService {
     	return academicExperienceRepository.findByEmail(email).orElseThrow(()->new NotFoundException("The user with email ".concat(email).concat(" not found!")));
     }
 
+    public List<AcademicExperience> getByUserId(Long userId) {
+        return academicExperienceRepository.findAcademicExperiencesByUserId(userId).orElseThrow(() -> new NotFoundException("Not found user with email".concat(userId.toString())));
+    }
+
     public List<AcademicExperience> getAll() {
         return academicExperienceRepository.findAll();
     }

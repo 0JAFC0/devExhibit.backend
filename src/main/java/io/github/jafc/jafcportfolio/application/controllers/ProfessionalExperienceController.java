@@ -61,4 +61,9 @@ public class ProfessionalExperienceController {
     public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByEmail(@PathVariable String email) {
         return responseService.ok(modelMapperService.convertList(experienceService.getByEmail(email), ProfessionalExperienceResponse.class));
     }
+
+    @GetMapping("/getProfessionalByUserId/{userId}")
+    public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+        return responseService.ok(modelMapperService.convertList(experienceService.getByUserId(userId), ProfessionalExperienceResponse.class));
+    }
 }

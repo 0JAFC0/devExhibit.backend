@@ -46,6 +46,10 @@ public class ProfessionalExperienceService {
         return professionalExperienceRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user with email".concat(email)));
     }
 
+    public List<ProfessionalExperience> getByUserId(Long userId) {
+        return professionalExperienceRepository.findProfessionalExperiencesByUserId(userId).orElseThrow(() -> new NotFoundException("Not found user with email".concat(userId.toString())));
+    }
+
     public List<ProfessionalExperience> getAll() {
         return professionalExperienceRepository.findAll();
     }

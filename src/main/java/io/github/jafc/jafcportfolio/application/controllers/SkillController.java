@@ -52,9 +52,9 @@ public class SkillController {
         return responseService.ok(modelMapperService.convertList(skillService.getAll(), SkillResponse.class));
     }
 
-    @GetMapping("/getSkillByUserID/{userId}")
-    public ResponseEntity<Response<List<SkillResponse>>> getSkillByUserID(@PathVariable("userId") Long userId) {
-        return responseService.ok(modelMapperService.convertList(skillService.getSkillsByUserID(userId), SkillResponse.class));
+    @GetMapping("/getSkillsByUserId/{userId}")
+    public ResponseEntity<Response<List<SkillResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+        return responseService.ok(modelMapperService.convertList(skillService.getByUserId(userId), SkillResponse.class));
     }
     
     @GetMapping("/{email}")

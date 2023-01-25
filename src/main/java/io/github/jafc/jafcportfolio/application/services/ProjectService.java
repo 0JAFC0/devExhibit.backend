@@ -42,8 +42,8 @@ public class ProjectService {
         projectRepository.deleteById(project.getId());
     }
 
-    public List<Project> getProjectByUserID(Long userId) {
-        return projectRepository.findProjectByUserID(userId).orElseThrow(() -> new NotFoundException("Not found projects in user with id ".concat(userId.toString())));
+    public List<Project> getByUserId(Long userId) {
+        return projectRepository.findByUserId(userId).orElseThrow(() -> new NotFoundException("Not found projects in user with id ".concat(userId.toString())));
     }
     
     public List<Project> getByEmail(String email) {

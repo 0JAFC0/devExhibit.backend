@@ -58,6 +58,11 @@ public class ProjectController {
         return responseService.ok(modelMapperService.convertList(projectService.getByEmail(email), ProjectResponse.class));
     }
 
+    @GetMapping("/getProjectByUserId/{userId}")
+    public ResponseEntity<Response<List<ProjectResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+        return responseService.ok(modelMapperService.convertList(projectService.getByUserId(userId), ProjectResponse.class));
+    }
+
     @GetMapping("/projects")
     public ResponseEntity<Response<List<ProjectResponse>>> getAll() {
         return responseService.ok(modelMapperService.convertList(projectService.getAll(), ProjectResponse.class));

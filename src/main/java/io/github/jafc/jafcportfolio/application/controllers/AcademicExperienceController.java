@@ -61,4 +61,9 @@ public class AcademicExperienceController {
     public ResponseEntity<Response<List<AcademicExperienceResponse>>> getByEmail(@PathVariable String email) {
         return responseService.ok(modelMapperService.convertList(academicExperienceService.getByEmail(email), AcademicExperienceResponse.class));
     }
+
+    @GetMapping("/getAcademicByUserId/{userId}")
+    public ResponseEntity<Response<List<AcademicExperienceResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+        return responseService.ok(modelMapperService.convertList(academicExperienceService.getByUserId(userId), AcademicExperienceResponse.class));
+    }
 }
