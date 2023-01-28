@@ -33,4 +33,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	public final ResponseEntity<ExceptionResponse> handlerInvalidJwtAuthenticationExceptions(Exception ex, WebRequest req) {
 		return new ResponseEntity<>(new ExceptionResponse(new Date(), ex.getMessage(), req.getDescription(false)),HttpStatus.FORBIDDEN);
 	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public final ResponseEntity<ExceptionResponse> handlerIllegalArgumentsExceptions(Exception ex, WebRequest req) {
+		return new ResponseEntity<>(new ExceptionResponse(new Date(), "algum argumento obrigatorio foi passado como nulo.", req.getDescription(false)),HttpStatus.BAD_REQUEST);
+	}
 }

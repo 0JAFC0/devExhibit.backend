@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -91,7 +92,9 @@ public class UserService {
     }
 
     public User update(User user) {
-        return userRepository.save(user);
+		User userTemp = findById(user.getId());
+		BeanUtils.copyProperties(userTemp, user);
+        return userRepository.save(userTemp);
     }
 
     public boolean deleteByEmail(String email) {

@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Entity
 @Table(name = "users")
 public class User implements Serializable{
@@ -40,7 +43,7 @@ public class User implements Serializable{
     @Column(nullable = false, length = 120)
     private String password;
     
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 50 )
     private String email;
 
     @Column(nullable = false)
@@ -60,8 +63,6 @@ public class User implements Serializable{
 
     @Column(nullable = false)
     private String about;
-
-    private boolean isMaintence;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_role",
