@@ -49,4 +49,8 @@ public class ReviewServices {
         return reviewRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
     }
+    
+    public List<Review> getByEmail(String email) {
+        return reviewRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+    }
 }
