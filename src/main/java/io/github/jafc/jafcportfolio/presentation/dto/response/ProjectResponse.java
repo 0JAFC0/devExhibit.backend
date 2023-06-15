@@ -1,6 +1,6 @@
 package io.github.jafc.jafcportfolio.presentation.dto.response;
 
-import io.github.jafc.jafcportfolio.domain.model.CategoryEnum;
+import io.github.jafc.jafcportfolio.domain.enumeration.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class ProjectResponse {
 
     private String description;
 
-    private CategoryEnum category;
+    private Category category;
 
     private String imageBase64;
 

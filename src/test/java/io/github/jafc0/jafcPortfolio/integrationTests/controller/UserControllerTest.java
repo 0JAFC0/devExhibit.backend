@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import io.github.jafc.jafcportfolio.JafcPortfolioApplication;
+import io.github.jafc.jafcportfolio.DevExhibitApplication;
 import io.github.jafc.jafcportfolio.presentation.dto.request.AccountCredentials;
 import io.github.jafc.jafcportfolio.presentation.dto.request.UserRequest;
 import io.github.jafc0.configs.TestConfigs;
@@ -19,9 +19,9 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {JafcPortfolioApplication.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {DevExhibitApplication.class})
 @TestMethodOrder(OrderAnnotation.class)
-public class UserControllerTest extends JafcPortfolioApplicationTests {
+class UserControllerTest extends JafcPortfolioApplicationTests {
     
 	private static RequestSpecification specification;
 
@@ -33,7 +33,7 @@ public class UserControllerTest extends JafcPortfolioApplicationTests {
 		user.setAge(23);
         user.setEmail("teste@gmail.com");
         user.setPassword("teste123");
-		user.setFullname("João Arthur");
+		user.setName("João Arthur");
 		user.setAbout("Cursando Analise e Desenvolvimento de Sistemas, Aprendendo REST API's RESTFul do 0 à AWS com Spring Boot 2.x e Docker, Sou uma pessoa que ama aprender, que gosta de ouvir música, aprender sobre o Linux e sobre as novas tecnologias.");
 		user.setField("Desenvolvedor Fullstack");
 		user.setImageBase64("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmQAAAJkCAMAAACIz82OAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURXVT3nFQ1mlLx2pLyGdJw3RS2yMmLG1Nzm9P0m5O0GVIv2lKxmhKxWpLyWtMymxMzHdU4WZIwXFQ1XBP");
@@ -64,9 +64,7 @@ public class UserControllerTest extends JafcPortfolioApplicationTests {
     @Test
     @Order(2)
     void testSignin() {
-        AccountCredentials user = new AccountCredentials();
-        user.setEmail("teste@gmail.com");
-        user.setPassword("teste123");
+        AccountCredentials user = new AccountCredentials("teste@gmail.com","teste123");
 
         specification = new RequestSpecBuilder()
 			.addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCAL)

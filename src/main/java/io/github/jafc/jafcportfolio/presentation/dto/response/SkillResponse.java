@@ -1,6 +1,6 @@
 package io.github.jafc.jafcportfolio.presentation.dto.response;
 
-import io.github.jafc.jafcportfolio.domain.model.TypeSkillEnum;
+import io.github.jafc.jafcportfolio.domain.enumeration.TypeSkill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,5 @@ public class SkillResponse {
 
     private Integer percentagem;
 
-    private TypeSkillEnum type;
-    
-    private UserResponse user;
+    private TypeSkill type;
 }

@@ -1,35 +1,24 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicUpdate;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import io.github.jafc.jafcportfolio.domain.enumeration.Category;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.Objects;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
 @DynamicUpdate
-@Table(name = "project")
+@Table(name = "T_PROJECTS", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))
 public class Project {
     
     @Id
@@ -44,17 +33,29 @@ public class Project {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private CategoryEnum category;
+    private Category category;
 
     @Column
     private String imageBase64;
 
-    @Column(name = "url_project_github")
-    private String urlProjectGithub;
+    @Column(name = "url_project")
+    private String urlProject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Project project = (Project) o;
+        return getId() != null && Objects.equals(getId(), project.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

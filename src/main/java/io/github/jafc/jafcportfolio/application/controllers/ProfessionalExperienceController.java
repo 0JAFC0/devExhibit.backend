@@ -1,19 +1,5 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.github.jafc.jafcportfolio.application.services.ProfessionalExperienceService;
 import io.github.jafc.jafcportfolio.domain.model.ProfessionalExperience;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
@@ -21,20 +7,25 @@ import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapper
 import io.github.jafc.jafcportfolio.presentation.dto.request.ProfessionalExperienceRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.ProfessionalExperienceResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static io.github.jafc.jafcportfolio.infrastructure.utils.ResourceUriMapper.PROFESSIONAL_EXPERIENCE_URI;
 
 @RestController
-@RequestMapping("/api/professional")
-@CrossOrigin(origins = {"http://127.0.0.1:4200/","https://0jafc0.github.io/"})
+@RequestMapping(PROFESSIONAL_EXPERIENCE_URI)
+@AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:4200/","https://0jafc0.github.io/"})
 public class ProfessionalExperienceController {
-    
-    @Autowired
-    private ProfessionalExperienceService experienceService;
 
-    @Autowired
-    private ModelMapperService modelMapperService;
+    private final ProfessionalExperienceService experienceService;
 
-    @Autowired
-    private ResponseService responseService;
+    private final ModelMapperService modelMapperService;
+
+    private final ResponseService responseService;
 
     @PostMapping("/save")
     public ResponseEntity<Response<ProfessionalExperienceResponse>> saveExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
@@ -52,11 +43,6 @@ public class ProfessionalExperienceController {
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping("/professionals")
-    public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getAll() {
-        return responseService.ok(modelMapperService.convertList(experienceService.getAll(), ProfessionalExperienceResponse.class));
-    }
-    
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByEmail(@PathVariable String email) {
         return responseService.ok(modelMapperService.convertList(experienceService.getByEmail(email), ProfessionalExperienceResponse.class));

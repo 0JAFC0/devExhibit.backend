@@ -1,60 +1,44 @@
 package io.github.jafc.jafcportfolio.application.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import io.github.jafc.jafcportfolio.domain.model.Project;
 import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.NotFoundException;
 import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.ProjectRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ProjectService {
-    
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private ProjectRepository projectRepository;
 
-    public Project saveProjectUser(Project project) {
-        User user = userService.findById(project.getUser().getId());
+    private final UserService userService;
+
+    private final ProjectRepository projectRepository;
+
+    public Project saveProjectUser(Project project, String email) {
+        User user = userService.getUserByEmail(email);
         project.setUser(user);
         return projectRepository.save(project);
     }
 
-    public Project updateProjectUser(Project project) {
+    public Project updateProjectUser(Project project, String email) {
         Optional<Project> temp = projectRepository.findById(project.getId());
-        if(!(temp.isPresent())) {
+        if(temp.isEmpty()) {
             throw new NotFoundException("Not found project with id".concat(project.getId().toString()));
         }
         return projectRepository.save(project);
     }
 
-    public void removeProjectUser(Project project) {
-        User user = userService.findById(project.getUser().getId());
-        if(!(project.getUser().getId().equals(user.getId()))) {
-            throw new NotFoundException("Not found project in user with id " + project.getUser().getId());
-        }
-        projectRepository.deleteById(project.getId());
-    }
-
-    public List<Project> getProjectByUserID(Long userId) {
-        return projectRepository.findProjectByUserID(userId).orElseThrow(() -> new NotFoundException("Not found projects in user with id ".concat(userId.toString())));
+    public void removeProjectUser(Project project, String email) {
+        User user = userService.getUserByEmail(email);
+        project.setUser(user);
+        projectRepository.delete(project);
     }
     
     public List<Project> getByEmail(String email) {
         return projectRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
-    }
-
-    public void deleteById(Long id) {
-        projectRepository.deleteById(id);
-    }
-
-    public List<Project> getAll() {
-        return projectRepository.findAll();
     }
 }

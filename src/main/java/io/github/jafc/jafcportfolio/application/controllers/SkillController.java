@@ -1,19 +1,5 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.github.jafc.jafcportfolio.application.services.SkillService;
 import io.github.jafc.jafcportfolio.domain.model.Skill;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
@@ -21,51 +7,61 @@ import io.github.jafc.jafcportfolio.infrastructure.utils.modelmapper.ModelMapper
 import io.github.jafc.jafcportfolio.presentation.dto.request.SkillRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.SkillResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.List;
+
+import static io.github.jafc.jafcportfolio.infrastructure.utils.ResourceUriMapper.SKILL_URI;
+
+@Tag(name = "skill-controller", description = "End Point de skills")
 @RestController
-@RequestMapping("/api/skill")
-@CrossOrigin(origins = {"http://127.0.0.1:4200/","https://0jafc0.github.io/"})
+@RequestMapping(SKILL_URI)
+@AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:4200/","https://0jafc0.github.io/"})
 public class SkillController {
 
-    @Autowired
-    private SkillService skillService;
-    
-    @Autowired
-    private ModelMapperService modelMapperService;
+    private final SkillService skillService;
 
-    @Autowired
-    private ResponseService responseService;
-    
+    private final ModelMapperService modelMapperService;
+
+    private final ResponseService responseService;
+
     @PostMapping("/save")
-    public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillRequest skill) {
-        return responseService.create(modelMapperService.convert(skillService.saveSkillUser(modelMapperService.convert(skill, Skill.class)),SkillResponse.class));
+    public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillRequest skill, Principal principal) {
+        Skill skillResponse = skillService.saveSkillUser(modelMapperService.convert(skill, Skill.class),
+                                                         principal.getName());
+
+        return responseService.create(modelMapperService.convert(skillResponse,SkillResponse.class));
+    }
+
+    @PutMapping
+    public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillRequest skill, Principal principal) {
+        Skill skillResponse = skillService.updateSkill(modelMapperService.convert(skill, Skill.class),
+                                                       principal.getName());
+
+        return responseService.ok(modelMapperService.convert(skillResponse, SkillResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillRequest skill) {
-        skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class));
+    public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillRequest skill, Principal principal) {
+        skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class), principal.getName());
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping("/skills")
-    public ResponseEntity<Response<List<SkillResponse>>> getAll() {
-        return responseService.ok(modelMapperService.convertList(skillService.getAll(), SkillResponse.class));
+    @GetMapping("/get-skills-By-user-id/{userId}")
+    public ResponseEntity<Response<List<SkillResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+        List<SkillResponse> skillResponses = modelMapperService.convertList(skillService.getByUserId(userId),
+                                                                            SkillResponse.class);
+
+        return responseService.ok(skillResponses);
     }
 
-    @GetMapping("/getSkillByUserID/{userId}")
-    public ResponseEntity<Response<List<SkillResponse>>> getSkillByUserID(@PathVariable("userId") Long userId) {
-        return responseService.ok(modelMapperService.convertList(skillService.getSkillsByUserID(userId), SkillResponse.class));
-    }
-    
     @GetMapping("/{email}")
     public ResponseEntity<Response<List<SkillResponse>>> getByEmail(@PathVariable("email") String email) {
         return responseService.ok(modelMapperService.convertList(skillService.getByEmail(email), SkillResponse.class));
-    }
-    
-    @PutMapping
-    public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillRequest skill) {
-        return responseService.ok(
-            modelMapperService.convert(skillService.updateSkill(
-                modelMapperService.convert(skill, Skill.class)), SkillResponse.class));
     }
 }

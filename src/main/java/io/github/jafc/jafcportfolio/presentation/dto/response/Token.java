@@ -1,23 +1,29 @@
 package io.github.jafc.jafcportfolio.presentation.dto.response;
 
-import java.io.Serializable;
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Token implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
-	private String type = "Bearer";
+	@JsonAlias("access_token")
 	private String accessToken;
-	private String email;
+
+	@JsonAlias("token_type")
+	private String tokenType;
+
+	private String scope;
+
+	private Long id;
+
 	private List<String> roles;
 }

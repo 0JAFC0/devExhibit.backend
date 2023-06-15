@@ -1,19 +1,5 @@
 package io.github.jafc.jafcportfolio.application.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.github.jafc.jafcportfolio.application.services.UserService;
 import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.utils.httpresponse.ResponseService;
@@ -23,64 +9,90 @@ import io.github.jafc.jafcportfolio.presentation.dto.request.UserRequest;
 import io.github.jafc.jafcportfolio.presentation.dto.response.Token;
 import io.github.jafc.jafcportfolio.presentation.dto.response.UserResponse;
 import io.github.jafc.jafcportfolio.presentation.shared.Response;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Api(value = "End Point do usuario")
+import java.io.IOException;
+import java.security.Principal;
+
+import static io.github.jafc.jafcportfolio.infrastructure.utils.ResourceUriMapper.USER_URI;
+
+@Tag(name = "user-controller", description = "End Point do usuario")
 @RestController
-@RequestMapping("/api/user")
-@CrossOrigin(origins = {"http://127.0.0.1:4200/","https://0jafc0.github.io/"})
+@RequestMapping(USER_URI)
+@CrossOrigin(origins = {"http://localhost:4200/","https://0jafc0.github.io/"})
+@AllArgsConstructor
 public class UserController {
-    
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private ModelMapperService modelMapperService;
 
-    @Autowired
-    private ResponseService responseService;
-    
+    private final UserService userService;
+
+    private final ModelMapperService modelMapperService;
+
+    private final ResponseService responseService;
+
     @PostMapping("/signup")
-    public ResponseEntity<Response<UserResponse>> saveUser(@RequestBody UserRequest userRequest) {
+    @Operation(summary = "Salva um usuario")
+    public ResponseEntity<Response<UserResponse>> saveUser(@ParameterObject @RequestBody UserRequest userRequest) {
         User convertido = modelMapperService.convert(userRequest, User.class);
-        return responseService.create(modelMapperService.convert(userService.saveUser(convertido), UserResponse.class));
+        return responseService.create(modelMapperService.convert(userService.signup(convertido), UserResponse.class));
     }
-    
+
     @PostMapping("/signin")
-    public ResponseEntity<Response<Token>> signin(@RequestBody AccountCredentials accountCredentials) {
-    	return responseService.ok(userService.signin(accountCredentials));
+    @Operation(summary = "Loga um usuario")
+    public ResponseEntity<Response<Token>> signin(@ParameterObject @RequestBody AccountCredentials accountCredentials) {
+        return responseService.ok(userService.signin(accountCredentials));
     }
 
-	@PutMapping
-    public ResponseEntity<Response<UserResponse>> update(@RequestBody UserRequest userRequest) {
-        return responseService.ok(modelMapperService.convert(userService.update(modelMapperService.convert(userRequest, User.class)), UserResponse.class));
+    @GetMapping("/google/callback")
+    @Operation(summary = "Callback para Loga um usuario utilizando o google")
+    public ResponseEntity<Response<Token>> googleSignin(@ParameterObject @RequestParam("code") String code) {
+        return responseService.ok(userService.getAccessTokenWithGoogle(code));
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<Response<List<UserResponse>>> getAll() {
-        return responseService.ok(modelMapperService.convertList(userService.getUsers(), UserResponse.class));
+    @GetMapping("/google/redireciona/auth")
+    @Operation(summary = "Redireciona para o google auth")
+    public void redirecionarToGoogleAuth(HttpServletResponse response) throws IOException {
+        String url = userService.redirecionarToGoogleAuth();
+        response.sendRedirect(url);
     }
 
-    @GetMapping("/userByIdExist/{id}")
-    public ResponseEntity<Response<Boolean>> userByIdExist(@PathVariable Long id) {
-        return responseService.ok(userService.userByIdExist(id));
+    @PutMapping
+    public ResponseEntity<Response<UserResponse>> update(@ParameterObject @RequestBody UserRequest userRequest, Principal principal) {
+        return responseService.ok(modelMapperService.convert(userService.update(modelMapperService.convert(userRequest, User.class), principal.getName()), UserResponse.class));
     }
 
-    @GetMapping("/getById/{id}")
-    public ResponseEntity<Response<UserResponse>> getById(@PathVariable Long id) {
-        return responseService.ok(modelMapperService.convert(userService.findById(id), UserResponse.class));
-    }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<UserResponse>> getByEmail(@PathVariable String email) {
-        return responseService.ok(modelMapperService.convert(userService.getUserByEmail(email), 
-                                                            UserResponse.class));
-    }
-
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Response<String>> delete(@PathVariable String email) {
-        if(userService.deleteByEmail(email))
+    @DeleteMapping
+    public ResponseEntity<Response<String>> delete(Principal principal) {
+        if(userService.deleteByEmail(principal.getName()))
             return responseService.ok("Delete is sucessfull.");
         return responseService.badRequest("Delete not sucessfull.");
     }
+
+    @GetMapping("/exist/{id}")
+    public ResponseEntity<Response<Boolean>> userByIdExist(@ParameterObject @PathVariable Long id) {
+        return responseService.ok(userService.userByIdExist(id));
+    }
+
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<Response<UserResponse>> getById(@ParameterObject @PathVariable Long id) {
+        return responseService.ok(modelMapperService.convert(userService.getById(id), UserResponse.class));
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<Response<UserResponse>> getByEmail(@ParameterObject @PathVariable String email) {
+        return responseService.ok(modelMapperService.convert(userService.getUserByEmail(email),
+                UserResponse.class));
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Response<Long>> getCountUsers() {
+        return responseService.ok(this.userService.countUsers());
+    }
 }
+
+
