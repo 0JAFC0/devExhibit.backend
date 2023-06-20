@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.security.Principal;
 import java.util.List;
 
 import static io.github.jafc.jafcportfolio.infrastructure.utils.ResourceUriMapper.PROFESSIONAL_EXPERIENCE_URI;
@@ -28,23 +31,31 @@ public class ProfessionalExperienceController {
     private final ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<ProfessionalExperienceResponse>> saveExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
-        return responseService.create(modelMapperService.convert(experienceService.saveProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
+    public ResponseEntity<Response<ProfessionalExperienceResponse>> save(@RequestBody ProfessionalExperienceRequest request, Principal principal) {
+        ProfessionalExperience experience = experienceService.save(modelMapperService.convert(request, ProfessionalExperience.class), principal.getName());
+        return responseService.create(modelMapperService.convert(experience, ProfessionalExperienceResponse.class));
     }
 
-    @PutMapping
-    public ResponseEntity<Response<ProfessionalExperienceResponse>> updateExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
-        return responseService.ok(modelMapperService.convert(experienceService.updateProfessional(modelMapperService.convert(experience, ProfessionalExperience.class)), ProfessionalExperienceResponse.class));
+    @PutMapping("/{name}")
+    public ResponseEntity<Response<ProfessionalExperienceResponse>> update(@PathVariable String name,
+                                                                                         @RequestBody ProfessionalExperienceRequest experience, Principal principal) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        ProfessionalExperience professionalExperience = experienceService.update(
+                name,
+                modelMapperService.convert(experience, ProfessionalExperience.class),
+                principal.getName());
+
+        return responseService.ok(modelMapperService.convert(professionalExperience, ProfessionalExperienceResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody ProfessionalExperienceRequest experience) {
-        experienceService.deleteProfessional(modelMapperService.convert(experience, ProfessionalExperience.class));
+    public ResponseEntity<Response<String>> remove(@RequestParam String name, Principal principal) {
+        experienceService.delete(name, principal.getName());
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByEmail(@PathVariable String email) {
-        return responseService.ok(modelMapperService.convertList(experienceService.getByEmail(email), ProfessionalExperienceResponse.class));
+    @GetMapping("/{userId}")
+    public ResponseEntity<Response<List<ProfessionalExperienceResponse>>> getByUserId(@PathVariable Long userId) {
+        return responseService.ok(modelMapperService.convertList(experienceService.getByUserId(userId),
+                ProfessionalExperienceResponse.class));
     }
 }

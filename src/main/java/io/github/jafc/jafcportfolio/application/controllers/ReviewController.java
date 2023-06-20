@@ -32,16 +32,16 @@ public class ReviewController {
 
     @PostMapping("/save")
     public ResponseEntity<Response<ReviewResponse>> save(@RequestBody ReviewRequest reviewResponse,
-                                                         Principal principal) {
+                                                                      Principal principal) {
 
-        Review review = reviewServices.saveReviewUser(modelMapperService.convert(reviewResponse, Review.class),
+        Review review = reviewServices.save(modelMapperService.convert(reviewResponse, Review.class),
                                                       principal.getName());
         return responseService.create(modelMapperService.convert(review, ReviewResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteSkill(@RequestBody ReviewRequest review, Principal principal) {
-        reviewServices.removeReviewUser(modelMapperService.convert(review, Review.class), principal.getName());
+    public ResponseEntity<Response<String>> delete(@RequestBody ReviewRequest review, Principal principal) {
+        reviewServices.remove(modelMapperService.convert(review, Review.class), principal.getName());
         return responseService.ok("delete Successful");
     }
     
@@ -49,19 +49,15 @@ public class ReviewController {
     public ResponseEntity<Response<ReviewResponse>> update(@RequestBody ReviewRequest reviewRequest,
                                                            Principal principal) {
 
-        Review review = reviewServices.updateReviewUser(modelMapperService.convert(reviewRequest, Review.class),
+        Review review = reviewServices.update(modelMapperService.convert(reviewRequest, Review.class),
                                                         principal.getName());
 
         return responseService.ok(modelMapperService.convert(review, ReviewResponse.class));
     }
 
-    @GetMapping("/get-reviews-By-user-id/{userId}")
-    public ResponseEntity<Response<List<ReviewResponse>>> getReviewByUserID(@PathVariable("userId") Long userId) {
-        return responseService.ok(modelMapperService.convertList(reviewServices.getReviewsByUserID(userId), ReviewResponse.class));
-    }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<List<ReviewResponse>>> getByEmail(@PathVariable("email") String email) {
-        return responseService.ok(modelMapperService.convertList(reviewServices.getByEmail(email), ReviewResponse.class));
+    @GetMapping("/{userId}")
+    public ResponseEntity<Response<List<ReviewResponse>>> getByUserID(@PathVariable Long userId) {
+        return responseService.ok(modelMapperService.convertList(reviewServices.getReviewsByUserId(userId),
+                                                                 ReviewResponse.class));
     }
 }

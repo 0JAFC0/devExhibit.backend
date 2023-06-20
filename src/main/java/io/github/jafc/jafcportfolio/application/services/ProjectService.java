@@ -4,11 +4,13 @@ import io.github.jafc.jafcportfolio.domain.model.Project;
 import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.NotFoundException;
 import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.ProjectRepository;
+import io.github.jafc.jafcportfolio.infrastructure.utils.BeansUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,27 +20,39 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public Project saveProjectUser(Project project, String email) {
+    public Project save(Project project, String email) {
         User user = userService.getUserByEmail(email);
         project.setUser(user);
         return projectRepository.save(project);
     }
 
-    public Project updateProjectUser(Project project, String email) {
-        Optional<Project> temp = projectRepository.findById(project.getId());
-        if(temp.isEmpty()) {
-            throw new NotFoundException("Not found project with id".concat(project.getId().toString()));
-        }
+    public Project update(String name, Project request, String email) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        Project project = getProjectByNameAndUserEmail(name, email);
+
+        String[] ignoreProperties = {"id", "name", "user"};
+
+        BeansUtils.copyPropertiesIgnoreNull(project, request, ignoreProperties);
+
         return projectRepository.save(project);
     }
 
-    public void removeProjectUser(Project project, String email) {
-        User user = userService.getUserByEmail(email);
-        project.setUser(user);
-        projectRepository.delete(project);
+    public void remove(String nameProject, String email) {
+        Project project = getProjectByNameAndUserEmail(nameProject, email);
+        projectRepository.deleteById(project.getId());
+    }
+
+    private Project getProjectByNameAndUserEmail(String name, String email) {
+        return this.projectRepository.findByNameAndUserEmail(name, email)
+                .orElseThrow(() -> new NotFoundException("The project with name " + name + " not found in user"));
     }
     
     public List<Project> getByEmail(String email) {
-        return projectRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+        return projectRepository.findByUserEmail(email)
+            .orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
+    }
+
+    public List<Project> getById(Long id) {
+        return projectRepository.findByUserId(id)
+                .orElseThrow(() -> new NotFoundException("The user with id ".concat(id.toString()).concat(" not found!")));
     }
 }

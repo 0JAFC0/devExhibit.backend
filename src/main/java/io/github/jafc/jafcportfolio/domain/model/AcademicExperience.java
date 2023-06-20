@@ -1,10 +1,7 @@
 package io.github.jafc.jafcportfolio.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +12,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @EqualsAndHashCode(callSuper = false)
 @DynamicUpdate
 @Entity
-public class AcademicExperience extends Experience{
+@Table(name = "T_ACADEMIC_EXPERIENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "name"}))
+public class AcademicExperience extends Experience {
 
     private String institution;
     

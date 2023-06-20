@@ -29,5 +29,5 @@ public class ProjectRequest {
     private String imageBase64;
 
     @Schema(description = "URl do Repositorio hospedado no github")
-    private String urlProjectGithub;
+    private String urlProject;
 }

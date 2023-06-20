@@ -5,11 +5,13 @@ import io.github.jafc.jafcportfolio.domain.model.User;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.ExistException;
 import io.github.jafc.jafcportfolio.infrastructure.exceptions.NotFoundException;
 import io.github.jafc.jafcportfolio.infrastructure.persistence.repository.SkillRepository;
+import io.github.jafc.jafcportfolio.infrastructure.utils.BeansUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class SkillService {
 
     private final UserService userService;
 
-    public Skill saveSkillUser(Skill skill, String email) {
+    public Skill save(Skill skill, String email) {
         User user = userService.getUserByEmail(email);
 
         if(skillRepository.existsByNameAndUserId(skill.getName(), user.getId())) {
@@ -30,21 +32,23 @@ public class SkillService {
         return skillRepository.save(skill);
     }
 
-    public Skill updateSkill(Skill skill, String email) {
-        Optional<Skill> temp = skillRepository.findById(skill.getId());
-        if(temp.isEmpty()) {
-            throw new NotFoundException("Not found skill with id".concat(skill.getId().toString()));
-        }
-        User user = userService.getUserByEmail(email);
-        skill.setUser(user);
+    public Skill update(String name, Skill request, String email) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        Skill skill = getByNameAndUserEmail(name, email);
+
+        String[] ignoreProperties = {"id", "name", "user"};
+
+        BeansUtils.copyPropertiesIgnoreNull(skill, request, ignoreProperties);
 
         return skillRepository.save(skill);
     }
 
-    public void removeSkillUser(Skill skill, String email) {
-        User user = userService.getUserByEmail(email);
-        skill.setUser(user);
+    public void remove(String name, String email) {
+        Skill skill = getByNameAndUserEmail(name, email);
         skillRepository.deleteById(skill.getId());
+    }
+
+    private Skill getByNameAndUserEmail(String name, String email) {
+        return skillRepository.findByNameAndUserEmail(name, email).orElseThrow(() -> new NotFoundException("Not found skill ".concat(name).concat("in User.")));
     }
 
     public List<Skill> getByUserId(Long userId) {

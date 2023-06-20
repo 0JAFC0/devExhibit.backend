@@ -22,7 +22,7 @@ public class ProjectResponse {
 
     private String imageBase64;
 
-    private String urlProjectGithub;
+    private String urlProject;
 
     private UserResponse user;
 }

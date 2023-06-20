@@ -11,19 +11,19 @@ public class ModelMapperService {
 
     private ModelMapper modelMapper;
 
-    public <T> T convert(Object origin, Class<T> target) {
+    public <O,T> T convert(O origin, Class<T>  target) {
         modelMapper = init();
         return modelMapper.map(origin, target);
     }
 
-    private ModelMapper init() {
+    public ModelMapper init() {
         if(Objects.isNull(modelMapper)) {
             modelMapper = new ModelMapper();
         }
         return modelMapper;
     }
 
-    public <S, T> List<T> convertList(List<S> origin, Class<T> target) {
+    public <O, T> List<T> convertList(List<O> origin, Class<T> target) {
         return origin.stream()
         .map(element -> convert(element, target))
         .toList();

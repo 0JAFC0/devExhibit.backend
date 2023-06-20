@@ -25,7 +25,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = true)
     private String name;
 
     @Column
@@ -42,7 +42,7 @@ public class Project {
     private String urlProject;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",updatable = false)
     @JsonIgnore
     private User user;
 

@@ -18,13 +18,13 @@ public class ReviewServices {
 
     private final UserService userService;
 
-    public Review saveReviewUser(Review review, String email) {
+    public Review save(Review review, String email) {
         User user = userService.getUserByEmail(email);
         review.setUser(user);
         return reviewRepository.save(review);
     }
 
-    public Review updateReviewUser(Review review, String email) {
+    public Review update(Review review, String email) {
         User user = userService.getUserByEmail(email);
 
         Optional<Review> temp = reviewRepository.findById(review.getId());
@@ -36,11 +36,11 @@ public class ReviewServices {
         return reviewRepository.save(review);
     }
 
-    public void removeReviewUser(Review review, String email) {
+    public void remove(Review review, String email) {
         reviewRepository.deleteReviewByTitleAndAndUser_Email(review.getTitle(), email);
     }
 
-    public List<Review> getReviewsByUserID(Long userId) {
+    public List<Review> getReviewsByUserId(Long userId) {
         return reviewRepository.findReviewsByUserID(userId)
                 .orElseThrow(() -> new NotFoundException("Not found review in user with id ".concat(userId.toString())));
     }
@@ -48,9 +48,5 @@ public class ReviewServices {
     public List<Review> getByEmail(String email) {
         return reviewRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
-    }
-    
-    public List<Review> getByEmail(String email) {
-        return reviewRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("The user with email ".concat(email).concat(" not found!")));
     }
 }

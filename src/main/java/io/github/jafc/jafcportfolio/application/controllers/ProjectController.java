@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.List;
 
@@ -29,24 +31,36 @@ public class ProjectController {
     private final ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<ProjectResponse>> saveProject(@RequestBody ProjectRequest project, Principal principal) {
-    	Project converter = projectService.saveProjectUser(modelMapperService.convert(project, Project.class), principal.getName());
+    public ResponseEntity<Response<ProjectResponse>> save(@RequestBody ProjectRequest request,
+                                                                              Principal principal) {
+
+    	Project converter = projectService.save(modelMapperService.convert(request, Project.class),
+                                                           principal.getName());
+
         return responseService.create(modelMapperService.convert(converter, ProjectResponse.class));
     }
 
-    @PutMapping
-    public ResponseEntity<Response<ProjectResponse>> updateProject(@RequestBody ProjectRequest project, Principal principal) {
-        return responseService.ok(modelMapperService.convert(projectService.updateProjectUser(modelMapperService.convert(project, Project.class), principal.getName()), ProjectResponse.class));
+    @PutMapping("/{name}")
+    public ResponseEntity<Response<ProjectResponse>> update(@PathVariable String name,
+                                                                   @RequestBody ProjectRequest request,
+                                                                                Principal principal) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+
+        Project project = projectService.update(
+                name,
+                modelMapperService.convert(request, Project.class),
+                principal.getName());
+        return responseService.ok(modelMapperService.convert(project, ProjectResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteProject(@RequestBody ProjectRequest project, Principal principal) {
-        projectService.removeProjectUser(modelMapperService.convert(project, Project.class), principal.getName());
+    public ResponseEntity<Response<String>> delete(@RequestParam String name, Principal principal) {
+        projectService.remove(name, principal.getName());
         return responseService.ok("Delete Successful.");
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<List<ProjectResponse>>> getByEmail(@PathVariable("email") String email) {
-        return responseService.ok(modelMapperService.convertList(projectService.getByEmail(email), ProjectResponse.class));
+    @GetMapping("/{userId}")
+    public ResponseEntity<Response<List<ProjectResponse>>> getByUserId(@PathVariable Long userId) {
+        return responseService.ok(modelMapperService.convertList(projectService.getById(userId),
+                ProjectResponse.class));
     }
 }

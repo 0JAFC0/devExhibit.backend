@@ -10,11 +10,12 @@ import java.util.Optional;
 
 public interface SkillRepository extends JpaRepository<Skill, Long> {
 
-    Optional<List<Skill>> findSkillsByUserId(@Param("userId") Long userId);
+    Optional<List<Skill>> findSkillsByUserId(Long userId);
     
     @Query(value = "SELECT * FROM Skill s WHERE (s.user_id = (SELECT id FROM users u WHERE u.email = :email))", nativeQuery = true)
 	Optional<List<Skill>> findByEmail(@Param("email") String email);
 
     boolean existsByNameAndUserId(String name, Long userId);
-    
+
+    Optional<Skill> findByNameAndUserEmail(String name, String email);
 }

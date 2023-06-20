@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.List;
 
@@ -31,37 +33,36 @@ public class SkillController {
     private final ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<SkillResponse>> saveSkill(@RequestBody SkillRequest skill, Principal principal) {
-        Skill skillResponse = skillService.saveSkillUser(modelMapperService.convert(skill, Skill.class),
+    public ResponseEntity<Response<SkillResponse>> save(@RequestBody SkillRequest request, Principal principal) {
+        Skill skillResponse = skillService.save(modelMapperService.convert(request, Skill.class),
                                                          principal.getName());
 
         return responseService.create(modelMapperService.convert(skillResponse,SkillResponse.class));
     }
 
-    @PutMapping
-    public ResponseEntity<Response<SkillResponse>> update(@RequestBody SkillRequest skill, Principal principal) {
-        Skill skillResponse = skillService.updateSkill(modelMapperService.convert(skill, Skill.class),
-                                                       principal.getName());
+    @PutMapping("{name}")
+    public ResponseEntity<Response<SkillResponse>> update(@PathVariable String name,
+                                                          @RequestBody SkillRequest request,
+                                                          Principal principal) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        Skill skillResponse = skillService.update(
+                name,
+                modelMapperService.convert(request, Skill.class),
+                principal.getName());
 
         return responseService.ok(modelMapperService.convert(skillResponse, SkillResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> deleteSkill(@RequestBody SkillRequest skill, Principal principal) {
-        skillService.removeSkillUser(modelMapperService.convert(skill, Skill.class), principal.getName());
+    public ResponseEntity<Response<String>> delete(@RequestParam String name, Principal principal) {
+        skillService.remove(name, principal.getName());
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping("/get-skills-By-user-id/{userId}")
-    public ResponseEntity<Response<List<SkillResponse>>> getByUserId(@PathVariable("userId") Long userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<Response<List<SkillResponse>>> getByUserId(@PathVariable Long userId) {
         List<SkillResponse> skillResponses = modelMapperService.convertList(skillService.getByUserId(userId),
                                                                             SkillResponse.class);
 
         return responseService.ok(skillResponses);
-    }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<List<SkillResponse>>> getByEmail(@PathVariable("email") String email) {
-        return responseService.ok(modelMapperService.convertList(skillService.getByEmail(email), SkillResponse.class));
     }
 }

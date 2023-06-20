@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "type")
 @Entity
 public abstract class Experience {

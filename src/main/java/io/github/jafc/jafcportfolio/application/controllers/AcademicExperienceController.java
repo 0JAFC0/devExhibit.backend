@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
+import java.security.Principal;
 import java.util.List;
 
 import static io.github.jafc.jafcportfolio.infrastructure.utils.ResourceUriMapper.ACADEMIC_EXPERIENCE_URI;
@@ -28,23 +31,34 @@ public class AcademicExperienceController {
     private final ResponseService responseService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response<AcademicExperienceResponse>> saveExperienceUser(@RequestBody AcademicExperienceRequest experience) {
-        return responseService.create(modelMapperService.convert(academicExperienceService.saveAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
+    public ResponseEntity<Response<AcademicExperienceResponse>> save(@RequestBody AcademicExperienceRequest experience,
+                                                                                                Principal principal) {
+
+        AcademicExperience academicExperience = academicExperienceService.save(modelMapperService.convert(experience, AcademicExperience.class), principal.getName());
+        return responseService.create(modelMapperService.convert(academicExperience, AcademicExperienceResponse.class));
     }
 
-    @PutMapping
-    public ResponseEntity<Response<AcademicExperienceResponse>> updateExperienceUser(@RequestBody AcademicExperienceRequest experience) {
-        return responseService.ok(modelMapperService.convert(academicExperienceService.updateAcademic(modelMapperService.convert(experience, AcademicExperience.class)), AcademicExperienceResponse.class));
+    @PutMapping("/{name}")
+    public ResponseEntity<Response<AcademicExperienceResponse>> update(@PathVariable String name,
+                                                                                     @RequestBody AcademicExperienceRequest experience,
+                                                                                                  Principal principal) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+
+        AcademicExperience academic = academicExperienceService.update(name, modelMapperService.convert(experience, AcademicExperience.class), principal.getName());
+        return responseService.ok(modelMapperService.convert(academic, AcademicExperienceResponse.class));
     }
 
     @DeleteMapping
-    public ResponseEntity<Response<String>> removeExperienceUser(@RequestBody AcademicExperienceRequest experience) {
-        academicExperienceService.deleteAcademic(modelMapperService.convert(experience, AcademicExperience.class));
+    public ResponseEntity<Response<String>> remove(@RequestParam String name,
+                                                                 Principal principal) {
+
+        academicExperienceService.delete(name, principal.getName());
+
         return responseService.ok("delete Successful");
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<Response<List<AcademicExperienceResponse>>> getByEmail(@PathVariable String email) {
-        return responseService.ok(modelMapperService.convertList(academicExperienceService.getByEmail(email), AcademicExperienceResponse.class));
+    @GetMapping("/{userId}")
+    public ResponseEntity<Response<List<AcademicExperienceResponse>>> getByUserId(@PathVariable Long userId) {
+        return responseService.ok(modelMapperService.convertList(academicExperienceService.getByUserId(userId),
+                                  AcademicExperienceResponse.class));
     }
 }
